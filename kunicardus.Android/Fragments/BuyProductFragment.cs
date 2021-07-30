@@ -12,10 +12,11 @@ using Kuni.Core;
 using Android.Telephony;
 using Android.Text;
 using MvvmCross.Binding.BindingContext;
-using Kuni.Core.Models;
 using Kunicardus.Droid.Helpers;
 using Android.Support.V4.App;
 using MvvmCross.Platforms.Android.Binding.Views;
+using kunicardus.Droid;
+using Kunicardus.Core;
 
 namespace Kunicardus.Droid
 {

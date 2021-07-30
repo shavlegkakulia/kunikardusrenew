@@ -1,14 +1,17 @@
-﻿using Android.Content;
+﻿
+
+using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
 using MvvmCross.Platforms.Android.Binding.BindingContext;
-using MvvmCross;
-using Kuni.Core.ViewModels;
+//using MvvmCross;
+using Kunicardus.Core.ViewModels;
 using Android.Views.InputMethods;
 using Android.Text.Method;
 using MvvmCross.Binding.BindingContext;
 using MvvmCross.Droid.Support.V4;
+using kunicardus.Droid;
 
 namespace Kunicardus.Droid.Fragments
 {
@@ -47,7 +50,7 @@ namespace Kunicardus.Droid.Fragments
 		public ChangePasswordFragment ()
 		{
 			if (this.ViewModel == null)
-				this.ViewModel = (MvvmCross.ViewModels.IMvxViewModel)Mvx.IoCProvider.IoCConstruct<ChangePasswordViewModel>();
+				this.ViewModel = (MvvmCross.ViewModels.IMvxViewModel)MvvmCross.Mvx.IoCProvider.IoCConstruct<ChangePasswordViewModel>();
 		}
 
 		#endregion

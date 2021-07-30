@@ -1,0 +1,1 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android"><item android:drawable="@drawable/radioiconactive" android:state_checked="true" /><item android:drawable="@drawable/radioicon" android:state_checked="false" /></selector>
