@@ -10,7 +10,8 @@ using System.Collections.Generic;
 using Kunicardus.Core.Models;
 using MvvmCross;
 using MvvmCross.Platform;
-using MvvmCross.Core.ViewModels;
+using Mvx = MvvmCross.Platform.Mvx;
+using MvvmCross.Commands;
 
 namespace Kunicardus.Core
 {

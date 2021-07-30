@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "txF/+JFi+ZELfeGUr+WQQCNGYGjDa6hRpHYeWb18c7DccyJ0L5cGjcUHW0bmk8W+E6ES6DNSePspZ0VCClcZ+A==",
+  "dgSpecHash": "ZSS8MpP+DXInl7mjArcp+3GAnv+VxZ8NRbeyIVylrgiYtMdnufGLv6TsxubXXsj+uMvHVs7ARr3Z3A/CyNoKtg==",
   "success": true,
   "projectFilePath": "D:\\Sources\\Work\\unicard ganaxleba\\kunikardusrenew\\kunicardus\\Kunicardus.Core.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,7 @@
     "C:\\Users\\Shako\\.nuget\\packages\\mvvmcross.platform\\5.7.0\\mvvmcross.platform.5.7.0.nupkg.sha512",
     "C:\\Users\\Shako\\.nuget\\packages\\mvvmcross.plugin.color\\8.0.2\\mvvmcross.plugin.color.8.0.2.nupkg.sha512",
     "C:\\Users\\Shako\\.nuget\\packages\\mvvmcross.plugin.file\\7.0.1\\mvvmcross.plugin.file.7.0.1.nupkg.sha512",
+    "C:\\Users\\Shako\\.nuget\\packages\\mvvmcross.plugin.network\\7.0.1\\mvvmcross.plugin.network.7.0.1.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
     "C:\\Users\\Shako\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\Shako\\.nuget\\packages\\sqlite-net-pcl\\1.7.335\\sqlite-net-pcl.1.7.335.nupkg.sha512",

@@ -3,7 +3,7 @@ using Kunicardus.Core.Providers.LocalDBProvider;
 using Kunicardus.Core.Services.Abstract;
 using Kunicardus.Core.Plugins.UIDialogPlugin;
 using System.Windows.Input;
-using MvvmCross.Core.ViewModels;
+using MvvmCross.ViewModels;
 using Kunicardus.Core.Models.DataTransferObjects;
 using System.Threading.Tasks;
 using Kunicardus.Core.Models;
@@ -23,26 +23,26 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
 		ISmsVerifycationService _smsVerificationService;
 		private IAuthService _authService;
 
-		public iSMSVerificationViewModel (IUserService userService,
-		                                  IAuthService authService,
-		                                  ISmsVerifycationService verifySMSCodeService, 
-		                                  ILocalDbProvider dbProvider, 
-		                                  IUIDialogPlugin dialogPlugin,
-		                                  ISmsVerifycationService smsVerificationViewModel)
+		public iSMSVerificationViewModel(IUserService userService,
+										  IAuthService authService,
+										  ISmsVerifycationService verifySMSCodeService,
+										  ILocalDbProvider dbProvider,
+										  IUIDialogPlugin dialogPlugin,
+										  ISmsVerifycationService smsVerificationViewModel)
 		{
 			_authService = authService;
 			_verifySMSCodeService = verifySMSCodeService;
 			_dbProvider = dbProvider;
-			_userService = userService; 
+			_userService = userService;
 			_dialogPlugin = dialogPlugin;
 			_smsVerificationService = smsVerificationViewModel;
 
 		}
 
-		public void Init (iSMSVerificationParams param)
+		public void Init(iSMSVerificationParams param)
 		{
-			
-			_currentUser = new TransferUserModel ();
+
+			_currentUser = new TransferUserModel();
 			_currentUser.Name = param.Name;
 			_currentUser.Surname = param.Surname;
 			_currentUser.PersonalId = param.PersonalId;
@@ -55,8 +55,9 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
 			PhoneNumberRetrieved = param.PhoneNumberRetrieved;
 
 			FBRegistrationIsInProgress = param.FacebookRegistration;
-			if (!string.IsNullOrWhiteSpace (param.FBUser)) {
-				_newFbUser = JsonConvert.DeserializeObject<TransferUserModel> (param.FBUser);
+			if (!string.IsNullOrWhiteSpace(param.FBUser))
+			{
+				_newFbUser = JsonConvert.DeserializeObject<TransferUserModel>(param.FBUser);
 			}
 			ResetPassword = param.ResetPassword;
 			EmailRegistration = param.EmailRegistration;
@@ -66,40 +67,48 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
 
 		#region Properties
 
-		public bool PhoneNumberRetrieved {
+		public bool PhoneNumberRetrieved
+		{
 			get;
 			set;
 		}
 
 		private string _phoneNumber;
 
-		public string PhoneNumber {
+		public string PhoneNumber
+		{
 			get { return _phoneNumber; }
-			set {
+			set
+			{
 				_phoneNumber = value;
-				if (!string.IsNullOrWhiteSpace (_phoneNumber) && _phoneNumber.Length > 9 && _phoneNumber.Contains ("995")) {
-					_phoneNumber = _phoneNumber.Substring (3);
-					_phoneNumber = _phoneNumber.Replace ("+", "");
-				}								
+				if (!string.IsNullOrWhiteSpace(_phoneNumber) && _phoneNumber.Length > 9 && _phoneNumber.Contains("995"))
+				{
+					_phoneNumber = _phoneNumber.Substring(3);
+					_phoneNumber = _phoneNumber.Replace("+", "");
+				}
 				string userName = "";
-				if (_resetPassword && _currentUser != null && !string.IsNullOrWhiteSpace (_currentUser.Email)) {
+				if (_resetPassword && _currentUser != null && !string.IsNullOrWhiteSpace(_currentUser.Email))
+				{
 					userName = _currentUser.Email;
 				}
-				var otpResult = _smsVerificationService.SendOTP ("", _unicardNumber, _phoneNumber, userName);
-				if (!otpResult.Success) {
-					_uiThread.InvokeUIThread (() => {
-						_dialog.ShowToast (otpResult.DisplayMessage);
+				var otpResult = _smsVerificationService.SendOTP("", _unicardNumber, _phoneNumber, userName);
+				if (!otpResult.Success)
+				{
+					_uiThread.InvokeUIThread(() => {
+						_dialog.ShowToast(otpResult.DisplayMessage);
 					});
 				}
-				RaisePropertyChanged (() => PhoneNumber);
-				RaisePropertyChanged (() => PhoneNumberFormated);
+				RaisePropertyChanged(() => PhoneNumber);
+				RaisePropertyChanged(() => PhoneNumberFormated);
 			}
 		}
 
-		public string PhoneNumberFormated {
-			get { 
+		public string PhoneNumberFormated
+		{
+			get
+			{
 				if (PhoneNumberRetrieved)
-					return _phoneNumber.Substring (0, 3) + "xxxx" + _phoneNumber.Substring (7, 2);
+					return _phoneNumber.Substring(0, 3) + "xxxx" + _phoneNumber.Substring(7, 2);
 				else
 					return _phoneNumber;
 			}
@@ -107,65 +116,76 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
 
 		private string _verificationCode;
 
-		public string VerificationCode {
+		public string VerificationCode
+		{
 			get { return _verificationCode; }
-			set {
+			set
+			{
 				_verificationCode = value;
-				RaisePropertyChanged (() => VerificationCode);
+				RaisePropertyChanged(() => VerificationCode);
 			}
 		}
 
 		private ICommand _continue;
 
-		public ICommand ContinueCommand {
-			get {
-				_continue = _continue ?? new MvxCommand (async () => {
+		public ICommand ContinueCommand
+		{
+			get
+			{
+				_continue = _continue ?? new MvvmCross.Commands.MvxCommand(async () => {
 					ShouldValidateModel = true;
-					VerifyCode ();
+					VerifyCode();
 				});
 				return _continue;
 			}
 		}
 
-		public ICommand Resend {
-			get {
-				return new MvxCommand (ResendCode);
+		public ICommand Resend
+		{
+			get
+			{
+				return new MvvmCross.Commands.MvxCommand(ResendCode);
 			}
 		}
 
 		private TransferUserModel _newFbUser;
 
-		public TransferUserModel NewFBUser {
+		public TransferUserModel NewFBUser
+		{
 			get { return _newFbUser; }
-			set{ _newFbUser = value; }
+			set { _newFbUser = value; }
 		}
 
 
 		private TransferUserModel _currentUser;
 
-		public TransferUserModel CurrentUSer {
-			get{ return _currentUser; }
+		public TransferUserModel CurrentUSer
+		{
+			get { return _currentUser; }
 			set { _currentUser = value; }
 		}
 
 		private bool _resetPassword;
 
-		public bool ResetPassword {
+		public bool ResetPassword
+		{
 			get { return _resetPassword; }
-			set{ _resetPassword = value; }
+			set { _resetPassword = value; }
 		}
 
 		private bool _emailRegistration;
 
-		public bool EmailRegistration {
+		public bool EmailRegistration
+		{
 			get { return _emailRegistration; }
-			set{ _emailRegistration = value; }
+			set { _emailRegistration = value; }
 		}
 
 		private string _unicardNumber;
 
-		public string UnicardNumber {
-			get{ return _unicardNumber; }
+		public string UnicardNumber
+		{
+			get { return _unicardNumber; }
 			set { _unicardNumber = value; }
 		}
 
@@ -177,87 +197,97 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
 
 		#region Register Methods
 
-		private string FormatPhoneNumber (string number)
+		private string FormatPhoneNumber(string number)
 		{
-			if (!string.IsNullOrWhiteSpace (number) && number.Length == 9) {
+			if (!string.IsNullOrWhiteSpace(number) && number.Length == 9)
+			{
 				number = Constants.GeorgiaMobIndex + number;
 			}
 			return number;
 		}
 
-		private async void ResendCode ()
+		private async void ResendCode()
 		{
 			//var user = _dbProvider.Get<UserInfo>().First();
-			InvokeOnMainThread (() => {
-				_dialogPlugin.ShowProgressDialog ("Loading...");
+			InvokeOnMainThread(() => {
+				_dialogPlugin.ShowProgressDialog("Loading...");
 			});
-			await Task.Run (() => {
+			await Task.Run(() => {
 				string userName = "";
-				if (_resetPassword && _currentUser != null && !string.IsNullOrWhiteSpace (_currentUser.Email)) {
+				if (_resetPassword && _currentUser != null && !string.IsNullOrWhiteSpace(_currentUser.Email))
+				{
 					userName = _currentUser.Email;
 				}
-				var response = _verifySMSCodeService.SendOTP ("", _unicardNumber, _phoneNumber, userName);
-				if (response != null) {				
-					InvokeOnMainThread (() => {
-						if (!string.IsNullOrEmpty (response.DisplayMessage)) {
-							_dialog.ShowToast (response.DisplayMessage);
+				var response = _verifySMSCodeService.SendOTP("", _unicardNumber, _phoneNumber, userName);
+				if (response != null)
+				{
+					InvokeOnMainThread(() => {
+						if (!string.IsNullOrEmpty(response.DisplayMessage))
+						{
+							_dialog.ShowToast(response.DisplayMessage);
 						}
 					});
 				}
-				InvokeOnMainThread (() => {
-					_dialogPlugin.DismissProgressDialog ();
+				InvokeOnMainThread(() => {
+					_dialogPlugin.DismissProgressDialog();
 				});
 			});
 		}
 
-		private void DoResetPassword ()
+		private void DoResetPassword()
 		{
-			var resetPasswordResponse = _userService.ResetPassword (_currentUser.Email, _verificationCode, _currentUser.Password);
-			InvokeOnMainThread (() => {
-				_dialog.DismissProgressDialog ();
+			var resetPasswordResponse = _userService.ResetPassword(_currentUser.Email, _verificationCode, _currentUser.Password);
+			InvokeOnMainThread(() => {
+				_dialog.DismissProgressDialog();
 			});
-			if (resetPasswordResponse.Success) {
-				NavigationCommand<LoginViewModel> (null, true);
-				ShowViewModel<LoginAuthViewModel> ();
-			} else {
-				InvokeOnMainThread (() => {
-					_dialog.ShowToast (resetPasswordResponse.DisplayMessage);
+			if (resetPasswordResponse.Success)
+			{
+				NavigationCommand<LoginViewModel>(null, true);
+				NavigationCommand<LoginAuthViewModel>();
+			}
+			else
+			{
+				InvokeOnMainThread(() => {
+					_dialog.ShowToast(resetPasswordResponse.DisplayMessage);
 				});
 			}
 		}
 
-		void Register ()
+		void Register()
 		{
 			BaseActionResult<RegisterUserModel> registerStatus;
 
 			string newCardRegistration = "0";
 			if (NewCardRegistration)
 				newCardRegistration = "1";
-			registerStatus = _userService.RegisterUser ("",
+			registerStatus = _userService.RegisterUser("",
 				_currentUser.Email,
 				_currentUser.Password,
 				_currentUser.Name,
 				_currentUser.Surname,
 				_currentUser.PersonalId,
 				_currentUser.DateOfBirth,
-				FormatPhoneNumber (_currentUser.PhoneNumber),
+				FormatPhoneNumber(_currentUser.PhoneNumber),
 				_currentUser.CardNumber ?? "",
 				newCardRegistration,
 				null);
 
-			InvokeOnMainThread (() => {
-				_dialogPlugin.DismissProgressDialog ();
+			InvokeOnMainThread(() => {
+				_dialogPlugin.DismissProgressDialog();
 			});
 
-			if (registerStatus != null) {
-				if (!string.IsNullOrWhiteSpace (registerStatus.DisplayMessage)) {
-					InvokeOnMainThread (() => {
-						_dialog.ShowToast (registerStatus.DisplayMessage);
+			if (registerStatus != null)
+			{
+				if (!string.IsNullOrWhiteSpace(registerStatus.DisplayMessage))
+				{
+					InvokeOnMainThread(() => {
+						_dialog.ShowToast(registerStatus.DisplayMessage);
 					});
 				}
-				if (registerStatus.Success) {
-					NavigationCommand<LoginViewModel> (null, true);
-					ShowViewModel<LoginAuthViewModel> ();
+				if (registerStatus.Success)
+				{
+					NavigationCommand<LoginViewModel>(null, true);
+					NavigationCommand<LoginAuthViewModel>();
 				}
 			}
 
@@ -265,55 +295,61 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
 
 		private string _userId;
 
-		private void SaveLoggedInUserInfoForFB ()
+		private void SaveLoggedInUserInfoForFB()
 		{
-			var users = _dbProvider.Get<UserInfo> ();
-			foreach (var item in users) {
-				_dbProvider.Delete<UserInfo> (item);
+			var users = _dbProvider.Get<UserInfo>();
+			foreach (var item in users)
+			{
+				_dbProvider.Delete<UserInfo>(item);
 			}
 
-			UserInfo newUser = new UserInfo () { UserId = _userId, Username = _currentUser.Email };
+			UserInfo newUser = new UserInfo() { UserId = _userId, Username = _currentUser.Email };
 
-			var userFromUnicard = _userService.GetUserInfoByUserId (_userId);
-			if (userFromUnicard != null && userFromUnicard.Success) {
+			var userFromUnicard = _userService.GetUserInfoByUserId(_userId);
+			if (userFromUnicard != null && userFromUnicard.Success)
+			{
 				newUser.FirstName = userFromUnicard.Result.FirstName;
 				newUser.LastName = userFromUnicard.Result.LastName;
 				newUser.Address = userFromUnicard.Result.Address;
 				newUser.FullAddress = userFromUnicard.Result.FullAddress;
 				string phone = userFromUnicard.Result.Phone;
-				if (phone.Length >= 12) {
-					phone = phone.Substring (3, phone.Length - 3);
+				if (phone.Length >= 12)
+				{
+					phone = phone.Substring(3, phone.Length - 3);
 				}
 				newUser.Phone = phone;
 				newUser.PersonalId = userFromUnicard.Result.PersonalNumber;
 			}
 
-			var balance = _userService.GetUserBalance (_userId);
-			if (balance != null && balance.Success) {
+			var balance = _userService.GetUserBalance(_userId);
+			if (balance != null && balance.Success)
+			{
 				newUser.Balance_AccumulatedPoint = balance.Result.AccumulatedPoint;
 				newUser.Balance_AvailablePoints = balance.Result.AvailablePoints;
 				newUser.Balance_BlockedPoints = balance.Result.BlockedPoints;
 				newUser.Balance_SpentPoints = balance.Result.SpentPoints;
 			}
 
-			var virtualCardNumber = _userService.GetVirtualCard (_userId);
-			if (virtualCardNumber != null && virtualCardNumber.Success) {
+			var virtualCardNumber = _userService.GetVirtualCard(_userId);
+			if (virtualCardNumber != null && virtualCardNumber.Success)
+			{
 				newUser.VirtualCardNumber = virtualCardNumber.Result.CardNumber;
 			}
 			newUser.IsFacebookUser = true;
-			_dbProvider.Insert<UserInfo> (newUser);
+			_dbProvider.Insert<UserInfo>(newUser);
 		}
 
-		private void FacebookRegister ()
+		private void FacebookRegister()
 		{
 			var newCard = "0";
-			if (NewCardRegistration) {
+			if (NewCardRegistration)
+			{
 				newCard = "1";
 				_unicardNumber = "";
 			}
 
 			BaseActionResult<RegisterUserModel> registerStatus;
-			registerStatus = _userService.RegisterUser (
+			registerStatus = _userService.RegisterUser(
 				_newFbUser.FBId,
 				_newFbUser.Email,
 				"",
@@ -325,181 +361,221 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
 				_unicardNumber ?? "",
 				newCard,
 				null);
-			if (registerStatus.Success) {
-				var response = _authService.Auth (_newFbUser.Email, null, _newFbUser.FBId);
-				InvokeOnMainThread (() => {
-					_dialog.DismissProgressDialog ();
+			if (registerStatus.Success)
+			{
+				var response = _authService.Auth(_newFbUser.Email, null, _newFbUser.FBId);
+				InvokeOnMainThread(() => {
+					_dialog.DismissProgressDialog();
 				});
-				if (response != null) {					
-					if (response.Success) {
+				if (response != null)
+				{
+					if (response.Success)
+					{
 						_userId = response.Result.UserId;
-						SaveLoggedInUserInfoForFB ();
-						NavigationCommand<RootViewModel> (null, true);
-					} else {
-						if (!string.IsNullOrEmpty (response.DisplayMessage)) {
-							InvokeOnMainThread (() => {
-								_dialog.ShowToast (registerStatus.DisplayMessage);
+						SaveLoggedInUserInfoForFB();
+						NavigationCommand<RootViewModel>(null, true);
+					}
+					else
+					{
+						if (!string.IsNullOrEmpty(response.DisplayMessage))
+						{
+							InvokeOnMainThread(() => {
+								_dialog.ShowToast(registerStatus.DisplayMessage);
 							});
 						}
 					}
 				}
-			} else {
-				InvokeOnMainThread (() => {
-					_dialog.DismissProgressDialog ();
+			}
+			else
+			{
+				InvokeOnMainThread(() => {
+					_dialog.DismissProgressDialog();
 				});
 			}
 
 
 
-			if (!string.IsNullOrEmpty (registerStatus.DisplayMessage)) {
-				InvokeOnMainThread (() => {
-					_dialog.ShowToast (registerStatus.DisplayMessage);
+			if (!string.IsNullOrEmpty(registerStatus.DisplayMessage))
+			{
+				InvokeOnMainThread(() => {
+					_dialog.ShowToast(registerStatus.DisplayMessage);
 				});
 			}
-			
+
 		}
 
 		private bool _otpWasCorrect;
 
-		public bool OtpWasCorrect {
+		public bool OtpWasCorrect
+		{
 			get { return _otpWasCorrect; }
-			set {
-				_otpWasCorrect = value; 
-				RaisePropertyChanged (() => OtpWasCorrect);
+			set
+			{
+				_otpWasCorrect = value;
+				RaisePropertyChanged(() => OtpWasCorrect);
 			}
 		}
 
 		#endregion
 
-		private void VerifyCode ()
+		private void VerifyCode()
 		{
-			if (!string.IsNullOrWhiteSpace (_verificationCode)) {
+			if (!string.IsNullOrWhiteSpace(_verificationCode))
+			{
 				BaseActionResult<UnicardApiBaseResponse> result;
-				Task.Run (async () => {
+				Task.Run(async () => {
 					result = null;
-					if (_resetPassword) {	
-						InvokeOnMainThread (() => {
-							_dialogPlugin.ShowProgressDialog ("");
-							DoResetPassword ();
-						});
-					} else {
-						InvokeOnMainThread (() => {
-							_dialogPlugin.ShowProgressDialog (ApplicationStrings.SubmittingOTP);
-						});
-						result = await _verifySMSCodeService.SubmitOTP (_verificationCode, "", "", _phoneNumber);
-						InvokeOnMainThread (() => {
-							_dialogPlugin.DismissProgressDialog ();
+					if (_resetPassword)
+					{
+						InvokeOnMainThread(() => {
+							_dialogPlugin.ShowProgressDialog("");
+							DoResetPassword();
 						});
 					}
-					if (result != null) {
+					else
+					{
+						InvokeOnMainThread(() => {
+							_dialogPlugin.ShowProgressDialog(ApplicationStrings.SubmittingOTP);
+						});
+						result = await _verifySMSCodeService.SubmitOTP(_verificationCode, "", "", _phoneNumber);
+						InvokeOnMainThread(() => {
+							_dialogPlugin.DismissProgressDialog();
+						});
+					}
+					if (result != null)
+					{
 						OtpWasCorrect = result.Success;
-						if (result.Success) {
-							if (!string.IsNullOrWhiteSpace (result.DisplayMessage))
-								InvokeOnMainThread (() => {
-									_dialog.ShowToast (result.DisplayMessage);
+						if (result.Success)
+						{
+							if (!string.IsNullOrWhiteSpace(result.DisplayMessage))
+								InvokeOnMainThread(() => {
+									_dialog.ShowToast(result.DisplayMessage);
 								});
-							if (_emailRegistration) {	
-								ShowViewModel<iEmailRegistrationViewModel> (new iEmailRegistrationViewModelParams () {
+							if (_emailRegistration)
+							{
+								NavigationCommand<iEmailRegistrationViewModel>(new iEmailRegistrationViewModelParams()
+								{
 									UnicardNumber = _unicardNumber
 								});
-							} else if (FBRegistrationIsInProgress) {
-								InvokeOnMainThread (() => {
-									_dialogPlugin.ShowProgressDialog (ApplicationStrings.Registering);
-								});
-								FacebookRegister ();
-							} else {
-								InvokeOnMainThread (() => {
-									_dialogPlugin.ShowProgressDialog (ApplicationStrings.Registering);
-								});
-								Register ();
 							}
-						} else
-							InvokeOnMainThread (() => {
-								_dialog.ShowToast ("შეყვანილი კოდი არასწორია");
+							else if (FBRegistrationIsInProgress)
+							{
+								InvokeOnMainThread(() => {
+									_dialogPlugin.ShowProgressDialog(ApplicationStrings.Registering);
+								});
+								FacebookRegister();
+							}
+							else
+							{
+								InvokeOnMainThread(() => {
+									_dialogPlugin.ShowProgressDialog(ApplicationStrings.Registering);
+								});
+								Register();
+							}
+						}
+						else
+							InvokeOnMainThread(() => {
+								_dialog.ShowToast("შეყვანილი კოდი არასწორია");
 							});
 					}
 				});
-			} else
-				InvokeOnMainThread (() => {
-					_dialog.ShowToast (ApplicationStrings.VerificationCodeIsNull);
+			}
+			else
+				InvokeOnMainThread(() => {
+					_dialog.ShowToast(ApplicationStrings.VerificationCodeIsNull);
 				});
 		}
 	}
 
 	public class iSMSVerificationParams
 	{
-		public bool PhoneNumberRetrieved {
+		public bool PhoneNumberRetrieved
+		{
 			get;
 			set;
 		}
 
-		public bool ResetPassword {
+		public bool ResetPassword
+		{
 			get;
 			set;
 		}
 
-		public string UserId {
+		public string UserId
+		{
 			get;
 			set;
 		}
 
-		public string UnicardNumber {
+		public string UnicardNumber
+		{
 			get;
 			set;
 		}
 
-		public string PhoneNumber {
+		public string PhoneNumber
+		{
 			get;
 			set;
 		}
 
-		public bool EmailRegistration {
+		public bool EmailRegistration
+		{
 			get;
 			set;
 		}
 
-		public string Email {
+		public string Email
+		{
 			get;
 			set;
 		}
 
-		public string Password {
+		public string Password
+		{
 			get;
 			set;
 		}
 
-		public string Name {
+		public string Name
+		{
 			get;
 			set;
 		}
 
-		public string Surname {
+		public string Surname
+		{
 			get;
 			set;
 		}
 
-		public string PersonalId {
+		public string PersonalId
+		{
 			get;
 			set;
 		}
 
-		public DateTime DateOfBirth {
+		public DateTime DateOfBirth
+		{
 			get;
 			set;
 		}
 
 
-		public bool NewCardRegistration {
+		public bool NewCardRegistration
+		{
 			get;
 			set;
 		}
 
-		public bool FacebookRegistration {
+		public bool FacebookRegistration
+		{
 			get;
 			set;
 		}
 
-		public string FBUser {
+		public string FBUser
+		{
 			get;
 			set;
 		}

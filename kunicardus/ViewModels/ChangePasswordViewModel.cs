@@ -2,13 +2,14 @@
 using Kunicardus.Core.Services.Abstract;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
-using MvvmCross.Core.ViewModels;
 using System.Threading.Tasks;
 using Kunicardus.Core.Providers.LocalDBProvider;
 using Kunicardus.Core.Models.DB;
 using System.Linq;
 using MvvmCross;
 using MvvmCross.Platform;
+using MvvmCross.Commands;
+using Mvx = MvvmCross.Platform.Mvx;
 
 namespace Kunicardus.Core.ViewModels
 {

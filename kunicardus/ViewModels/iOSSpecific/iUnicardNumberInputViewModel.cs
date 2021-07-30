@@ -1,7 +1,7 @@
 ﻿using System;
 using Kunicardus.Core.Services.Abstract;
 using System.Windows.Input;
-using MvvmCross.Core.ViewModels;
+using MvvmCross.ViewModels;
 using Kunicardus.Core.Models;
 using Kunicardus.Core.Models.DataTransferObjects;
 using System.Collections.Generic;
@@ -113,14 +113,14 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
         {
             get
             {
-                _continueCommand = _continueCommand ?? new MvxCommand(Continue);
+                _continueCommand = _continueCommand ?? new MvvmCross.Commands.MvxCommand(Continue);
                 return _continueCommand;
             }
         }
 
         //public ICommand BackCommand
         //{
-        //    get { return new MvxCommand(() => { Mvx.IocConstruct<RegisterViewModel>(); }); }
+        //    get { return new MvvmCross.Commands.MvxCommand(() => { Mvx.IoCConstruct<RegisterViewModel>(); }); }
         //}
 
         private CardStatusModel _unicardStatus;
@@ -201,7 +201,7 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
                             var userInfo = _userService.GetUserInfoByCard(_cardNumber);
                             _retrievedUserPhoneNumber = userInfo.Result.PhoneNumber;
                             InvokeOnMainThread(() => _dialog.DismissProgressDialog());
-                            ShowViewModel<iSMSVerificationViewModel>(new iSMSVerificationParams()
+                            NavigationCommand<iSMSVerificationViewModel>(new iSMSVerificationParams()
                             {
                                 PhoneNumberRetrieved = true,
                                 PhoneNumber = _retrievedUserPhoneNumber,
@@ -239,7 +239,7 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
                                 Merchants = JsonConvert.SerializeObject(this.Merchants),
                                 FBUser = JsonConvert.SerializeObject(_fbUser)
                             };
-                            ShowViewModel<iTransactionVerificationViewModel>(tranParam);
+                            NavigationCommand<iTransactionVerificationViewModel>(tranParam);
                         }
                         else if (_unicardStatus.CardIsValid && !_unicardStatus.ExistsUserData && !_unicardStatus.HasTransactions)
                         {

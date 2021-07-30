@@ -12,8 +12,9 @@ using System.Text;
 using System.Net.Http.Headers;
 using MvvmCross;
 using Kunicardus.Core.Services.Abstract;
-using MvvmCross.Plugins.File;
+using MvvmCross.Plugin.File;
 using MvvmCross.Platform;
+using Mvx = MvvmCross.Platform.Mvx;
 
 namespace Kunicardus.Core.UnicardApiProvider
 {

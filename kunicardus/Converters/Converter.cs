@@ -170,9 +170,9 @@ namespace Kunicardus.Core.Converters
 			double points = (double)value;
 
 			if (points < 0) {
-				return  System.Drawing.Color.FromArgb(242, 142, 45);
+				return System.Drawing.Color.FromArgb(242, 142, 45);
 			} else {
-				return  System.Drawing.Color.FromArgb(140, 189, 58);
+				return System.Drawing.Color.FromArgb(140, 189, 58);
 			}
 		}
 	}

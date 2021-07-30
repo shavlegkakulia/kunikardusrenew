@@ -1,7 +1,7 @@
 ﻿using System;
 using Kunicardus.Core.Services.Abstract;
 using System.Windows.Input;
-using MvvmCross.Core.ViewModels;
+using MvvmCross.ViewModels;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using MvvmCross;
@@ -18,14 +18,14 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
 
 		#region Constructor Implementation
 
-		public iRegistrationViewModel (IUserService userService)
+		public iRegistrationViewModel(IUserService userService)
 		{
 			_userService = userService;
 		}
 
 		private bool _newCardRegistration;
 
-		public void Init (bool newCardRegistration, string unicardNumber)
+		public void Init(bool newCardRegistration, string unicardNumber)
 		{
 			_newCardRegistration = newCardRegistration;
 			_userUnicardNumber = unicardNumber;
@@ -37,124 +37,148 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
 
 		private string _name;
 
-		public string Name {
+		public string Name
+		{
 			get { return _name; }
-			set {
+			set
+			{
 				_name = value;
-				RaisePropertyChanged (() => Name);
+				RaisePropertyChanged(() => Name);
 			}
 		}
 
 		private string _surName;
 
-		public string Surname {
+		public string Surname
+		{
 			get { return _surName; }
-			set {
+			set
+			{
 				_surName = value;
-				RaisePropertyChanged (() => Surname);
+				RaisePropertyChanged(() => Surname);
 			}
 		}
 
 		private string _idNumber;
 
-		public string IdNumber {
+		public string IdNumber
+		{
 			get { return _idNumber; }
-			set {
+			set
+			{
 				_idNumber = value;
-				RaisePropertyChanged (() => IdNumber);
+				RaisePropertyChanged(() => IdNumber);
 			}
 		}
 
 		private DateTime? _dateOfBirth;
 
-		public DateTime? DateOfBirth {
+		public DateTime? DateOfBirth
+		{
 			get { return _dateOfBirth; }
-			set {
+			set
+			{
 				_dateOfBirth = value;
-				RaisePropertyChanged (() => DateOfBirth);
+				RaisePropertyChanged(() => DateOfBirth);
 			}
 		}
 
 		private string _phoneNumber;
 
-		public string PhoneNumber {
+		public string PhoneNumber
+		{
 			get { return _phoneNumber; }
-			set {
+			set
+			{
 				_phoneNumber = value;
-				RaisePropertyChanged (() => PhoneNumber);
+				RaisePropertyChanged(() => PhoneNumber);
 			}
 		}
 
 		private string _email;
 
-		public string Email {
+		public string Email
+		{
 			get { return _email; }
-			set {
+			set
+			{
 				_email = value;
-				RaisePropertyChanged (() => Email);
+				RaisePropertyChanged(() => Email);
 			}
 		}
 
 		private bool _showPassword = false;
 
-		public bool ShowPassword {
+		public bool ShowPassword
+		{
 			get { return _showPassword; }
-			set {
+			set
+			{
 				_showPassword = value;
-				RaisePropertyChanged (() => ShowPassword);
+				RaisePropertyChanged(() => ShowPassword);
 			}
 		}
 
 		private string _password;
 
-		public string Password {
+		public string Password
+		{
 			get { return _password; }
-			set {
+			set
+			{
 				_password = value;
-				RaisePropertyChanged (() => Password);
+				RaisePropertyChanged(() => Password);
 			}
 		}
 
 		private string _confirmPassword;
 
-		public string ConfirmPassword {
-			get{ return _confirmPassword; }
-			set {
+		public string ConfirmPassword
+		{
+			get { return _confirmPassword; }
+			set
+			{
 				_confirmPassword = value;
-				RaisePropertyChanged (() => ConfirmPassword);
+				RaisePropertyChanged(() => ConfirmPassword);
 			}
 		}
 
 		private ICommand _registerUserCommand;
 
-		public ICommand RegisterUserCommand {
-			get {
-				_registerUserCommand = _registerUserCommand ?? new MvxCommand (RegisterUser); 
+		public ICommand RegisterUserCommand
+		{
+			get
+			{
+				_registerUserCommand = _registerUserCommand ?? new MvvmCross.Commands.MvxCommand(RegisterUser);
 				return _registerUserCommand;
 			}
 		}
 
 		private bool _validationStatus;
 
-		public bool ValidationStatus {
-			get{ return _validationStatus; }
+		public bool ValidationStatus
+		{
+			get { return _validationStatus; }
 			set { _validationStatus = value; }
 		}
 
 		private string _userUnicardNumber;
 
-		public string UserUnicardNumber {
-			get{ return _userUnicardNumber; }
+		public string UserUnicardNumber
+		{
+			get { return _userUnicardNumber; }
 			set { _userUnicardNumber = value; }
 		}
 
 		private bool _userExists;
 
-		public bool UserExists {
-			get{ return _userExists; }
-			set { 
-				_userExists = value; 
-				RaisePropertyChanged (() => UserExists);
+		public bool UserExists
+		{
+			get { return _userExists; }
+			set
+			{
+				_userExists = value;
+				RaisePropertyChanged(() => UserExists);
 			}
 		}
 
@@ -162,24 +186,27 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
 
 		#region Methods
 
-		private void RegisterUser ()
-		{	
+		private void RegisterUser()
+		{
 			ShouldValidateModel = true;
-			string validationResult = Validation ();
+			string validationResult = Validation();
 
-			if (string.IsNullOrWhiteSpace (validationResult)) {
+			if (string.IsNullOrWhiteSpace(validationResult))
+			{
 				_validationStatus = true;
-				InvokeOnMainThread (() => {
-					_dialog.ShowProgressDialog (ApplicationStrings.Loading);
+				InvokeOnMainThread(() => {
+					_dialog.ShowProgressDialog(ApplicationStrings.Loading);
 				});
-				Task.Run (async () => {					
-					var userExistsService = await _userService.UserExists (_email);
-					InvokeOnMainThread (() => {
-						_dialog.DismissProgressDialog ();
+				Task.Run(async () => {
+					var userExistsService = await _userService.UserExists(_email);
+					InvokeOnMainThread(() => {
+						_dialog.DismissProgressDialog();
 					});
-					if (!userExistsService.Result.Exists) {
+					if (!userExistsService.Result.Exists)
+					{
 						UserExists = false;
-						ShowViewModel<iSMSVerificationViewModel> (new iSMSVerificationParams () {
+						NavigationCommand<iSMSVerificationViewModel>(new iSMSVerificationParams()
+						{
 							PhoneNumberRetrieved = false,
 							PhoneNumber = _phoneNumber,
 							Name = _name,
@@ -190,21 +217,25 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
 							Password = _password,
 							UnicardNumber = _userUnicardNumber,
 							NewCardRegistration = _newCardRegistration
-						});		
+						});
 
-						//Mvx.IocConstruct<SMSVerificationViewModel> ();
+						//Mvx.IoCConstruct<SMSVerificationViewModel> ();
 
-					} else {
-						InvokeOnMainThread (() => {
-							_dialog.ShowToast (ApplicationStrings.UserExists);
+					}
+					else
+					{
+						InvokeOnMainThread(() => {
+							_dialog.ShowToast(ApplicationStrings.UserExists);
 						});
 						UserExists = true;
 					}
 				});
 
-			} else {
-				InvokeOnMainThread (() => {
-					_dialog.ShowToast (validationResult);
+			}
+			else
+			{
+				InvokeOnMainThread(() => {
+					_dialog.ShowToast(validationResult);
 				});
 				_validationStatus = false;
 			}
@@ -214,43 +245,47 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
 
 		#region Validation Methods
 
-		private string PasswordValidation ()
+		private string PasswordValidation()
 		{
 			string errorText = "";
 
-			if (!string.IsNullOrWhiteSpace (_password)) {
-				Match ifNumber = Regex.Match (_password, @"\d+");
-				Match ifCharacter = Regex.Match (_password, @"[a-zA-Z]");
+			if (!string.IsNullOrWhiteSpace(_password))
+			{
+				Match ifNumber = Regex.Match(_password, @"\d+");
+				Match ifCharacter = Regex.Match(_password, @"[a-zA-Z]");
 
 				if (_password.Length < 8 || ifNumber.Value == "" || ifCharacter.Value == "")
-					errorText = ApplicationStrings.CorePasswordHint;				
+					errorText = ApplicationStrings.CorePasswordHint;
 			}
 			return errorText;
 		}
 
-		private string Validation ()
+		private string Validation()
 		{
-			string passValidation = PasswordValidation ();
+			string passValidation = PasswordValidation();
 			string errorText = "";
-			if (string.IsNullOrWhiteSpace (_name))
+			if (string.IsNullOrWhiteSpace(_name))
 				errorText = "შეიყვანეთ თქვენი სახელი";
-			else if (string.IsNullOrWhiteSpace (_surName))
+			else if (string.IsNullOrWhiteSpace(_surName))
 				errorText = "შეიყვანეთ თქვენი გვარი";
-			else if (string.IsNullOrWhiteSpace (_idNumber) || _idNumber.Length != 11)
+			else if (string.IsNullOrWhiteSpace(_idNumber) || _idNumber.Length != 11)
 				errorText = "შეიყვანეთ პირადი ნომერი სწორი ფორმატით";
 			else if (!_dateOfBirth.HasValue)
 				errorText = "შეიყვანეთ დაბადების თარიღი";
-			else if (string.IsNullOrWhiteSpace (_email))
+			else if (string.IsNullOrWhiteSpace(_email))
 				errorText = "შეიყვანეთ იმეილი";
-			else if (string.IsNullOrWhiteSpace (_phoneNumber) || _phoneNumber.Length != 9)
+			else if (string.IsNullOrWhiteSpace(_phoneNumber) || _phoneNumber.Length != 9)
 				errorText = "შეიყვანეთ ტელეფონის ნომერი სწორი ფორმატით: 5xx xx xx xx";
-			else if (!string.IsNullOrWhiteSpace (passValidation)) {
+			else if (!string.IsNullOrWhiteSpace(passValidation))
+			{
 				errorText = passValidation;
-			} else if (string.IsNullOrWhiteSpace (_password) || _password != _confirmPassword)
+			}
+			else if (string.IsNullOrWhiteSpace(_password) || _password != _confirmPassword)
 				errorText = "პაროლები ერთმანეთს არ ემთხვევა";
-			else {
-				Regex regex = new Regex (@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
-				Match match = regex.Match (_email);
+			else
+			{
+				Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+				Match match = regex.Match(_email);
 				if (!match.Success)
 					errorText = "შეიყვანეთ მეილი სწორი ფორმატით";
 			}

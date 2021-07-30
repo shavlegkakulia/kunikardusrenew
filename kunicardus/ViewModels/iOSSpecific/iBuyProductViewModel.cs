@@ -6,9 +6,9 @@ using Kunicardus.Core.Providers.LocalDBProvider;
 using Kunicardus.Core.Models.DB;
 using System.Linq;
 using System.Windows.Input;
-using MvvmCross.Core.ViewModels;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
+using MvvmCross.Commands;
 
 namespace Kunicardus.Core.ViewModels.iOSSpecific
 {

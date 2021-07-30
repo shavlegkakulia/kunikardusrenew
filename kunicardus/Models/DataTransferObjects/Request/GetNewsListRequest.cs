@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Kunicardus.Core.Models.DataTransferObjects.Request
+namespace Kunicardus.Core.Models.DataTransferObjects
 {
     public class GetNewsListRequest : UnicardApiBaseRequest
     {

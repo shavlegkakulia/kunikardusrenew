@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Kunicardus.Core.Models.DataTransferObjects;
 using System.Windows.Input;
-using MvvmCross.Core.ViewModels;
+using MvvmCross.ViewModels;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -12,124 +12,142 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
 	{
 		ITransactionsService _transactionService;
 
-		public iTransactionVerificationViewModel (ITransactionsService transactionService)
+		public iTransactionVerificationViewModel(ITransactionsService transactionService)
 		{
 			_transactionService = transactionService;
 		}
 
 		TransferUserModel FBUser;
 
-		public void Init (iTransactionVerificationViewModelParams param)
+		public void Init(iTransactionVerificationViewModelParams param)
 		{
 			UnicardNumber = param.UnicardNumber;
-			Merchants = JsonConvert.DeserializeObject<List<Merchant>> (param.Merchants);
-			FBUser = JsonConvert.DeserializeObject<TransferUserModel> (param.FBUser);
+			Merchants = JsonConvert.DeserializeObject<List<Merchant>>(param.Merchants);
+			FBUser = JsonConvert.DeserializeObject<TransferUserModel>(param.FBUser);
 		}
 
-		private List<Merchant> _merchants = new List<Merchant> ();
+		private List<Merchant> _merchants = new List<Merchant>();
 
-		public List<Merchant> Merchants {
+		public List<Merchant> Merchants
+		{
 			get { return _merchants; }
-			set {
+			set
+			{
 				_merchants = value;
-				RaisePropertyChanged (() => Merchants);
+				RaisePropertyChanged(() => Merchants);
 			}
 		}
 
 		private Merchant _selectedItem;
 
-		public Merchant SelectedMerchant {
+		public Merchant SelectedMerchant
+		{
 			get { return _selectedItem; }
-			set {
+			set
+			{
 				_selectedItem = value;
-				RaisePropertyChanged (() => SelectedMerchant);
+				RaisePropertyChanged(() => SelectedMerchant);
 			}
 		}
 
 		private string _price;
 
-		public string Price {	
+		public string Price
+		{
 			get { return _price; }
-			set {
+			set
+			{
 				_price = value;
-				RaisePropertyChanged (() => Price);
+				RaisePropertyChanged(() => Price);
 			}
 		}
 
 		private DateTime? _date;
 
-		public DateTime? Date {	
+		public DateTime? Date
+		{
 			get { return _date; }
-			set {
+			set
+			{
 				_date = value;
-				RaisePropertyChanged (() => Date);
+				RaisePropertyChanged(() => Date);
 			}
 		}
 
 		private string _unicardNumber;
 
-		public string UnicardNumber {
+		public string UnicardNumber
+		{
 			get { return _unicardNumber; }
 			set { _unicardNumber = value; }
 		}
 
 		private ICommand _continueCommand;
 
-		public ICommand ContinueCommand {
-			get {
-				_continueCommand = _continueCommand ?? new MvxCommand (Continue);
+		public ICommand ContinueCommand
+		{
+			get
+			{
+				_continueCommand = _continueCommand ?? new MvvmCross.Commands.MvxCommand(Continue);
 				return _continueCommand;
 			}
 		}
 
 		private bool _lastTransactionStatus;
 
-		public bool LastTransactionStatus {
+		public bool LastTransactionStatus
+		{
 			get { return _lastTransactionStatus; }
-			set{ _lastTransactionStatus = value; }
+			set { _lastTransactionStatus = value; }
 		}
 
-		private void Continue ()
+		private void Continue()
 		{
 			ShouldValidateModel = true;
 			if (_selectedItem == null)
-				InvokeOnMainThread (() => {
-					_dialog.ShowToast ("აირჩიეთ ბოლო ტრანზაქციის ადგილი");
+				InvokeOnMainThread(() => {
+					_dialog.ShowToast("აირჩიეთ ბოლო ტრანზაქციის ადგილი");
 				});
-			else if (string.IsNullOrWhiteSpace (_price))
-				InvokeOnMainThread (() => {
-					_dialog.ShowToast ("შეიყვანეთ თანხა");
+			else if (string.IsNullOrWhiteSpace(_price))
+				InvokeOnMainThread(() => {
+					_dialog.ShowToast("შეიყვანეთ თანხა");
 				});
 			else if (!_date.HasValue)
-				InvokeOnMainThread (() => {
-					_dialog.ShowToast ("აირჩიეთ ბოლო ტრანზაქციის დრო");
+				InvokeOnMainThread(() => {
+					_dialog.ShowToast("აირჩიეთ ბოლო ტრანზაქციის დრო");
 				});
-			else {
-				InvokeOnMainThread (() => {
-					_dialog.ShowProgressDialog ("");
+			else
+			{
+				InvokeOnMainThread(() => {
+					_dialog.ShowProgressDialog("");
 				});
-				Task.Run (() => {
-					var response = _transactionService.CheckLastTransaction (
-						               _unicardNumber,
-						               _selectedItem.MerchantId,	
-						               _price.Replace (",", "."),
-						               _date);
+				Task.Run(() => {
+					var response = _transactionService.CheckLastTransaction(
+									   _unicardNumber,
+									   _selectedItem.MerchantId,
+									   _price.Replace(",", "."),
+									   _date);
 					_lastTransactionStatus = response.Success;
-					InvokeOnMainThread (() => {
-						_dialog.DismissProgressDialog ();
+					InvokeOnMainThread(() => {
+						_dialog.DismissProgressDialog();
 					});
-					if (response.Success) {
-						if (FBUser == null) {
-							ShowViewModel<iRegistrationViewModel> (new {newCardRegistration = false, unicardNumber = _unicardNumber});
-						} else {
+					if (response.Success)
+					{
+						if (FBUser == null)
+						{
+							NavigationCommand<iRegistrationViewModel>(new { newCardRegistration = false, unicardNumber = _unicardNumber });
+						}
+						else
+						{
 							FBUser.CardNumber = _unicardNumber;
 							FBUser.NewCardRegistration = false;
-							ShowViewModel<iFacebookRegistrationViewModel> (FBUser);
+							NavigationCommand<iFacebookRegistrationViewModel>(FBUser);
 						}
 					}
-					_uiThread.InvokeUIThread (() => {
-						if (!string.IsNullOrEmpty (response.DisplayMessage)) {
-							_dialog.ShowToast (response.DisplayMessage);
+					_uiThread.InvokeUIThread(() => {
+						if (!string.IsNullOrEmpty(response.DisplayMessage))
+						{
+							_dialog.ShowToast(response.DisplayMessage);
 						}
 					});
 				});
@@ -139,17 +157,20 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
 
 	public class iTransactionVerificationViewModelParams
 	{
-		public string UnicardNumber {
+		public string UnicardNumber
+		{
 			get;
 			set;
 		}
 
-		public string Merchants {
+		public string Merchants
+		{
 			get;
 			set;
 		}
 
-		public string FBUser {
+		public string FBUser
+		{
 			get;
 			set;
 		}

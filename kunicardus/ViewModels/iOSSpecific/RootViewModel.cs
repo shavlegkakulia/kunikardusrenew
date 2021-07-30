@@ -1,5 +1,4 @@
 ﻿using System;
-using MvvmCross.Core.ViewModels;
 using Kunicardus.Core.Services.Abstract;
 using System.Threading.Tasks;
 using Kunicardus.Core.Models;
@@ -10,6 +9,8 @@ using System.Linq;
 using Kunicardus.Core.Models.BusinessModels;
 using MvvmCross;
 using MvvmCross.Platform;
+using MvvmCross.ViewModels;
+using Mvx = MvvmCross.Platform.Mvx;
 
 namespace Kunicardus.Core.ViewModels.iOSSpecific
 {

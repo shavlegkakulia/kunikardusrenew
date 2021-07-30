@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Kunicardus.Core.Models;
 using System.Windows.Input;
-using MvvmCross.Core.ViewModels;
 using MvvmCross;
 using Kunicardus.Core.Services.Abstract;
 using System.Threading.Tasks;

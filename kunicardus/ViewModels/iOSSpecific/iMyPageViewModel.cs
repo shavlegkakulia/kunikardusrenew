@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using MvvmCross.Core.ViewModels;
 using Kunicardus.Core.Models.Helpers;
 using Kunicardus.Core.Services.Abstract;
 using Kunicardus.Core.Models.DB;

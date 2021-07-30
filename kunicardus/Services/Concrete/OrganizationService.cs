@@ -6,9 +6,10 @@ using Kunicardus.Core.UnicardApiProvider;
 using Kunicardus.Core.Helpers.AppSettings;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using Kunicardus.Core.Models.DataTransferObjects.Request;
 using Kunicardus.Core.Models.DataTransferObjects.Response;
 using Kunicardus.Core.Models.BusinessModels;
+using Kunicardus.Core.Models.DataTransferObjects;
+using MerchantModel = Kunicardus.Core.Models.BusinessModels.MerchantModel;
 
 namespace Kunicardus.Core
 {

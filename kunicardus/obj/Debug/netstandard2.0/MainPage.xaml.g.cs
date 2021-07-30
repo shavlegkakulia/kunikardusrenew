@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: global::Xamarin.Forms.Xaml.XamlResourceIdAttribute("kunicardus.MainPage.xaml", "MainPage.xaml", typeof(global::kunicardus.MainPage))]
+[assembly: global::Xamarin.Forms.Xaml.XamlResourceIdAttribute("Kunicardus.Core.MainPage.xaml", "MainPage.xaml", typeof(global::kunicardus.MainPage))]
 
 namespace kunicardus {
     

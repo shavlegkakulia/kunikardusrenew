@@ -8,10 +8,11 @@ using System;
 using System.Xml.Linq;
 using Kunicardus.Core.Services.Abstract;
 using System.Windows.Input;
-using MvvmCross.Core.ViewModels;
+using MvvmCross.ViewModels;
 using Kunicardus.Core.ViewModels.iOSSpecific;
 using Kunicardus.Core.Models;
-using MvvmCross.Platform;
+using MvvmCross;
+//using MvvmCross;
 
 namespace Kunicardus.Core.ViewModels
 {
@@ -35,7 +36,8 @@ namespace Kunicardus.Core.ViewModels
             GetUserSettings();
             if (UserSettings.Pin != null && UserSettings.Pin.Equals(pin))
                 return true;
-            else {
+            else
+            {
                 _dialog.ShowToast(ApplicationStrings.incorrect_pin);
                 return false;
             }
@@ -79,7 +81,7 @@ namespace Kunicardus.Core.ViewModels
             Task.Run(() =>
             {
                 UserSettings = _dbProvider.Get<SettingsInfo>().Where(x => x.UserId == Convert.ToInt32(UserId)).FirstOrDefault();
-                var device = Mvx.Resolve<IDevice>();
+                var device = Mvx.IoCProvider.Resolve<IDevice>();
                 if (device.Platform == "ios")
                 {
                     GetAlerts();
@@ -108,7 +110,7 @@ namespace Kunicardus.Core.ViewModels
         {
             get
             {
-                _itemClick = _itemClick ?? new MvxCommand<ProductsInfo>(ProductClick);
+                _itemClick = _itemClick ?? new MvvmCross.Commands.MvxCommand<ProductsInfo>(ProductClick);
                 return _itemClick;
             }
         }
@@ -128,7 +130,7 @@ namespace Kunicardus.Core.ViewModels
         private void ProductClick(ProductsInfo product)
         {
             _gaService.TrackEvent(GAServiceHelper.From.FromHomePage, GAServiceHelper.Events.CatalogDetailClicked);
-            ShowViewModel<iCatalogDetailViewModel>(new { productId = product.ProductID });
+            NavigationCommand<iCatalogDetailViewModel>(new { productId = product.ProductID });
         }
 
         public void GetProducts(int? categoryId, int? lastModified)

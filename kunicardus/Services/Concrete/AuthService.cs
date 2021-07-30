@@ -13,9 +13,8 @@ using Kunicardus.Core.Providers.LocalDBProvider;
 using Kunicardus.Core.Plugins.UIDialogPlugin;
 using Kunicardus.Core.Helpers.Device;
 using Kunicardus.Core.Plugins.Connectivity;
-using MvvmCross.Core.Views;
-using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
+using Mvx = MvvmCross.Platform.Mvx;
 
 namespace Kunicardus.Core
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Kunicardus.Core.Models;
 using System.Windows.Input;
-using MvvmCross.Core.ViewModels;
+using MvvmCross.ViewModels;
 using MvvmCross;
 using Kunicardus.Core.Services.Abstract;
 using System.Threading.Tasks;
@@ -24,16 +24,16 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
 
 		#region Constructor Implementation
 
-		public iCatalogDetailViewModel (IProductsService productService, ILocalDbProvider dbProvider)
-		{			
+		public iCatalogDetailViewModel(IProductsService productService, ILocalDbProvider dbProvider)
+		{
 			_productService = productService;
 			_dbProvider = dbProvider;
 		}
 
-		public void Init (int productId)
+		public void Init(int productId)
 		{
 			this.ProductId = productId;
-			PopulateProductData ();
+			PopulateProductData();
 		}
 
 		#endregion
@@ -42,154 +42,185 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
 
 		private int _productId;
 
-		public int ProductId {
-			get{ return _productId; }
-			set {
-				_productId = value; 
-				RaisePropertyChanged (() => ProductId);
+		public int ProductId
+		{
+			get { return _productId; }
+			set
+			{
+				_productId = value;
+				RaisePropertyChanged(() => ProductId);
 			}
 		}
 
 		private int _imageCount;
 
-		public int ImageCount {
-			get{ return _imageCount; }
-			set {
+		public int ImageCount
+		{
+			get { return _imageCount; }
+			set
+			{
 				_imageCount = _imageUrls.Count;
-				RaisePropertyChanged (() => ImageCount);
-				ImageCountName = string.Format ("{0} სურათი", _imageCount);
+				RaisePropertyChanged(() => ImageCount);
+				ImageCountName = string.Format("{0} სურათი", _imageCount);
 			}
 		}
 
 		private string _imageCountName;
 
-		public string ImageCountName {
-			get {
+		public string ImageCountName
+		{
+			get
+			{
 				return _imageCountName;
 			}
-			set {
+			set
+			{
 				_imageCountName = value;
-				RaisePropertyChanged (() => ImageCountName);
+				RaisePropertyChanged(() => ImageCountName);
 			}
 		}
 
 		private List<string> _imageUrls;
 
-		public List<string> ImageUrls {
+		public List<string> ImageUrls
+		{
 			get { return _imageUrls; }
-			set {
-				_imageUrls = value; 
-				RaisePropertyChanged (() => ImageUrls);
+			set
+			{
+				_imageUrls = value;
+				RaisePropertyChanged(() => ImageUrls);
 			}
 		}
 
 		private string _currentImageUrl;
 
-		public string CurrentImageUrl {
-			get{ return _currentImageUrl; }
-			set {
+		public string CurrentImageUrl
+		{
+			get { return _currentImageUrl; }
+			set
+			{
 				_currentImageUrl = value;
-				RaisePropertyChanged (() => CurrentImageUrl);
+				RaisePropertyChanged(() => CurrentImageUrl);
 			}
 		}
 
 		private int _productTypeId;
 
-		public int ProductTypeID { 
-			get{ return _productTypeId; } 
-			set {
+		public int ProductTypeID
+		{
+			get { return _productTypeId; }
+			set
+			{
 				_productTypeId = value;
-				RaisePropertyChanged (() => ProductTypeID);
+				RaisePropertyChanged(() => ProductTypeID);
 			}
 		}
 
 		private string _productName;
 
-		public string ProductName { 
-			get{ return _productName; } 
-			set {
+		public string ProductName
+		{
+			get { return _productName; }
+			set
+			{
 				_productName = value;
-				RaisePropertyChanged (() => ProductName);
+				RaisePropertyChanged(() => ProductName);
 			}
 		}
 
 		private string _productDesctiption;
 
-		public string ProductDescription { 
-			get{ return _productDesctiption; } 
-			set {
+		public string ProductDescription
+		{
+			get { return _productDesctiption; }
+			set
+			{
 				_productDesctiption = value;
-				RaisePropertyChanged (() => ProductDescription);
+				RaisePropertyChanged(() => ProductDescription);
 			}
 		}
 
 		private int _productPrice;
 
-		public int ProductPrice { 
-			get{ return _productPrice; } 
-			set {
+		public int ProductPrice
+		{
+			get { return _productPrice; }
+			set
+			{
 				_productPrice = value;
-				RaisePropertyChanged (() => ProductPrice);
+				RaisePropertyChanged(() => ProductPrice);
 			}
 		}
 
 		private string _catalogID;
 
-		public string CatalogID { 
-			get{ return _catalogID; } 
-			set {
+		public string CatalogID
+		{
+			get { return _catalogID; }
+			set
+			{
 				_catalogID = value;
-				RaisePropertyChanged (() => CatalogID);
+				RaisePropertyChanged(() => CatalogID);
 			}
 		}
 
 		private int _productDiscountPercent;
 
-		public int ProductDiscountPercent { 
-			get{ return _productDiscountPercent; } 
-			set {
+		public int ProductDiscountPercent
+		{
+			get { return _productDiscountPercent; }
+			set
+			{
 				_productDiscountPercent = value;
-				RaisePropertyChanged (() => ProductDiscountPercent);
+				RaisePropertyChanged(() => ProductDiscountPercent);
 			}
 		}
 
 		private bool _discountVisibility;
 
-		public bool DiscountVisibility { 
-			get{ return _discountVisibility; } 
-			set {
+		public bool DiscountVisibility
+		{
+			get { return _discountVisibility; }
+			set
+			{
 				_discountVisibility = value;
-				RaisePropertyChanged (() => DiscountVisibility);
+				RaisePropertyChanged(() => DiscountVisibility);
 			}
 		}
 
 		private List<DiscountModel> _userDiscounts;
 
-		public List<DiscountModel> UserDiscounts { 
-			get{ return _userDiscounts; }
-			set {
+		public List<DiscountModel> UserDiscounts
+		{
+			get { return _userDiscounts; }
+			set
+			{
 				_userDiscounts = value;
-				RaisePropertyChanged (() => UserDiscounts);
+				RaisePropertyChanged(() => UserDiscounts);
 			}
 		}
 
 		private int _productOldPrice;
 
-		public int ProductOldPrice { 
-			get{ return _productOldPrice; } 
-			set {
+		public int ProductOldPrice
+		{
+			get { return _productOldPrice; }
+			set
+			{
 				_productOldPrice = value;
-				RaisePropertyChanged (() => ProductOldPrice);
+				RaisePropertyChanged(() => ProductOldPrice);
 			}
 		}
 
 		private List<DeliveryMethod> _deliveryMethods;
 
-		public  List<DeliveryMethod> DeliveryMethods { 
-			get{ return _deliveryMethods; } 
-			set {
+		public List<DeliveryMethod> DeliveryMethods
+		{
+			get { return _deliveryMethods; }
+			set
+			{
 				_deliveryMethods = value;
-				RaisePropertyChanged (() => DeliveryMethods);
+				RaisePropertyChanged(() => DeliveryMethods);
 			}
 		}
 
@@ -197,9 +228,10 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
 
 		#region Methods
 
-		public void GoToBuyProduct (DeliveryMethod deliveryMethod)
+		public void GoToBuyProduct(DeliveryMethod deliveryMethod)
 		{
-			ShowViewModel<iBuyProductViewModel> (new {
+			NavigationCommand<iBuyProductViewModel>(new
+			{
 				currentImageUrl = _currentImageUrl,
 				productName = _productName,
 				productID = _productId,
@@ -207,26 +239,28 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
 				deliveryMethodId = deliveryMethod.DeliveryMethodId,
 				productTypeID = _productTypeId,
 				note = deliveryMethod.Note,
-				discounts = JsonConvert.SerializeObject (_userDiscounts)
+				discounts = JsonConvert.SerializeObject(_userDiscounts)
 			});
 		}
 
-		private void PopulateProductData ()
+		private void PopulateProductData()
 		{
-			InvokeOnMainThread (() => {
-				_dialog.ShowProgressDialog (ApplicationStrings.Loading);
+			InvokeOnMainThread(() => {
+				_dialog.ShowProgressDialog(ApplicationStrings.Loading);
 			});
-			Task.Run (async() => {			
-				UserInfo currentUser = _dbProvider.Get<UserInfo> ().FirstOrDefault ();	
-				var productInfo = await _productService.GetProductByID (ProductId, int.Parse (currentUser.UserId));
-				InvokeOnMainThread (() => {
-					_dialog.DismissProgressDialog ();
+			Task.Run(async () => {
+				UserInfo currentUser = _dbProvider.Get<UserInfo>().FirstOrDefault();
+				var productInfo = await _productService.GetProductByID(ProductId, int.Parse(currentUser.UserId));
+				InvokeOnMainThread(() => {
+					_dialog.DismissProgressDialog();
 				});
-				if (productInfo.Success) {
-					if (productInfo.Result != null) {
+				if (productInfo.Success)
+				{
+					if (productInfo.Result != null)
+					{
 						this.ProductName = productInfo.Result.ProductName;
 						if (productInfo.Result.ProductImages.Count != 0)
-							this.CurrentImageUrl = productInfo.Result.ProductImages [0];
+							this.CurrentImageUrl = productInfo.Result.ProductImages[0];
 						this.ProductTypeID = productInfo.Result.ProductTypeID;
 						this.ProductPrice = productInfo.Result.DiscountedPrice;
 						this.ProductDiscountPercent = productInfo.Result.DiscountedPercent;
@@ -236,12 +270,15 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
 						this.ProductOldPrice = productInfo.Result.ProductPrice;
 						this.CatalogID = productInfo.Result.CatalogID;
 						this.DeliveryMethods = productInfo.Result.DeliveryMethods;
-						this.UserDiscounts = productInfo.Result.UserDiscounts;	
+						this.UserDiscounts = productInfo.Result.UserDiscounts;
 					}
-				} else {
-					if (!string.IsNullOrWhiteSpace (productInfo.DisplayMessage)) {
-						InvokeOnMainThread (() => {
-							_dialog.ShowToast (productInfo.DisplayMessage);
+				}
+				else
+				{
+					if (!string.IsNullOrWhiteSpace(productInfo.DisplayMessage))
+					{
+						InvokeOnMainThread(() => {
+							_dialog.ShowToast(productInfo.DisplayMessage);
 						});
 					}
 				}

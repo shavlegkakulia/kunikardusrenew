@@ -1,5 +1,4 @@
 ﻿using System;
-using MvvmCross.Core.ViewModels;
 using System.Windows.Input;
 using Kunicardus.Core.ViewModels;
 using Kunicardus.Core.Plugins.UIDialogPlugin;

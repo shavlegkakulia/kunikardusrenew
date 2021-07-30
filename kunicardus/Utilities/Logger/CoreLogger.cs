@@ -1,7 +1,7 @@
 ﻿using System;
 using Kunicardus.Core.Helpers.AppSettings;
 using Kunicardus.Core.Helpers.Device;
-using MvvmCross.Plugins.File;
+using MvvmCross.Plugin.File;
 
 namespace Kunicardus.Core.Utilities.Logger
 {

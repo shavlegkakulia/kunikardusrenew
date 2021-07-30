@@ -3,14 +3,14 @@ using Kunicardus.Core.Services.Abstract;
 using System.Windows.Input;
 using Kunicardus.Core.Models;
 using System.Threading.Tasks;
-using MvvmCross.Core.ViewModels;
+using MvvmCross.ViewModels;
 using System.Text.RegularExpressions;
 
 namespace Kunicardus.Core.ViewModels.iOSSpecific
 {
 	public class iEmailRegistrationViewModel : BaseViewModel
 	{
-		
+
 		#region Private variables
 
 		private IUserService _userService;
@@ -19,7 +19,7 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
 
 		#region Constructor Implementation
 
-		public iEmailRegistrationViewModel (IUserService userService)
+		public iEmailRegistrationViewModel(IUserService userService)
 		{
 			_userService = userService;
 		}
@@ -30,39 +30,47 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
 
 		private string _email;
 
-		public string Email {
+		public string Email
+		{
 			get { return _email; }
-			set {
-				_email = value; 
-				RaisePropertyChanged (() => Email);
+			set
+			{
+				_email = value;
+				RaisePropertyChanged(() => Email);
 			}
 		}
 
 		private string _password;
 
-		public string Password {
+		public string Password
+		{
 			get { return _password; }
-			set {
-				_password = value; 
-				RaisePropertyChanged (() => Password);
+			set
+			{
+				_password = value;
+				RaisePropertyChanged(() => Password);
 			}
 		}
 
 		private string _confirmPassword;
 
-		public string ConfirmPassword {
+		public string ConfirmPassword
+		{
 			get { return _confirmPassword; }
-			set {
+			set
+			{
 				_confirmPassword = value;
-				RaisePropertyChanged (() => ConfirmPassword);
+				RaisePropertyChanged(() => ConfirmPassword);
 			}
 		}
 
 		private ICommand _continueCommand;
 
-		public ICommand ContinueCommand {
-			get {
-				_continueCommand = _continueCommand ?? new MvxCommand (ContinueRegister);
+		public ICommand ContinueCommand
+		{
+			get
+			{
+				_continueCommand = _continueCommand ?? new MvvmCross.Commands.MvxCommand(ContinueRegister);
 				return _continueCommand;
 			}
 		}
@@ -73,15 +81,15 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
 
 		#region Methods
 
-		public void Init (iEmailRegistrationViewModelParams param)
+		public void Init(iEmailRegistrationViewModelParams param)
 		{
 			_cardNumber = param.UnicardNumber;
 		}
 
-		void EmailRegister ()
+		void EmailRegister()
 		{
 			BaseActionResult<RegisterUserModel> emailRegisterStatus;
-			emailRegisterStatus = _userService.RegisterUser ("",
+			emailRegisterStatus = _userService.RegisterUser("",
 				_email,
 				_password,
 				"",
@@ -92,38 +100,44 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
 				_cardNumber,
 				"0",
 				null);
-			
-			InvokeOnMainThread (() => {
-				_dialog.DismissProgressDialog ();
+
+			InvokeOnMainThread(() => {
+				_dialog.DismissProgressDialog();
 			});
 
-			if (emailRegisterStatus != null) {
-				if (!string.IsNullOrWhiteSpace (emailRegisterStatus.DisplayMessage)) {
-					_uiThread.InvokeUIThread (() => {
-						_dialog.ShowToast (emailRegisterStatus.DisplayMessage);
+			if (emailRegisterStatus != null)
+			{
+				if (!string.IsNullOrWhiteSpace(emailRegisterStatus.DisplayMessage))
+				{
+					_uiThread.InvokeUIThread(() => {
+						_dialog.ShowToast(emailRegisterStatus.DisplayMessage);
 					});
 				}
-				if (emailRegisterStatus.Success) {
-					NavigationCommand<LoginViewModel> (null, true);
-					ShowViewModel<LoginAuthViewModel> ();
+				if (emailRegisterStatus.Success)
+				{
+					NavigationCommand<LoginViewModel>(null, true);
+					NavigationCommand<LoginAuthViewModel>();
 				}
 			}
 		}
 
-		private void ContinueRegister ()
+		private void ContinueRegister()
 		{
 			ShouldValidateModel = true;
-			string validationResult = Validation ();
-			if (string.IsNullOrWhiteSpace (validationResult)) {
-				InvokeOnMainThread (() => {
-					_dialog.ShowProgressDialog (ApplicationStrings.Registering);
+			string validationResult = Validation();
+			if (string.IsNullOrWhiteSpace(validationResult))
+			{
+				InvokeOnMainThread(() => {
+					_dialog.ShowProgressDialog(ApplicationStrings.Registering);
 				});
-				Task.Run (async () => {					
-					EmailRegister ();
+				Task.Run(async () => {
+					EmailRegister();
 				});
-			} else {
-				InvokeOnMainThread (() => {
-					_dialog.ShowToast (validationResult);
+			}
+			else
+			{
+				InvokeOnMainThread(() => {
+					_dialog.ShowToast(validationResult);
 				});
 			}
 		}
@@ -132,32 +146,33 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
 
 		#region Validation
 
-		private string PasswordValidation ()
+		private string PasswordValidation()
 		{
 			string errorText = "";
-			if (!string.IsNullOrWhiteSpace (_password)) {
-				Match ifNumber = Regex.Match (_password, @"\d+");
-				Match ifCharacter = Regex.Match (_password, @"[a-zA-Z]");
+			if (!string.IsNullOrWhiteSpace(_password))
+			{
+				Match ifNumber = Regex.Match(_password, @"\d+");
+				Match ifCharacter = Regex.Match(_password, @"[a-zA-Z]");
 				if (_password.Length < 8 || ifNumber.Value == "" || ifCharacter.Value == "")
-					errorText = ApplicationStrings.CorePasswordHint;	
+					errorText = ApplicationStrings.CorePasswordHint;
 			}
 			return errorText;
 		}
 
-		private string Validation ()
+		private string Validation()
 		{
 			string result = "";
-			Regex regex = new Regex (@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
-			string passValidation = PasswordValidation ();
-			if (string.IsNullOrWhiteSpace (_email))
+			Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+			string passValidation = PasswordValidation();
+			if (string.IsNullOrWhiteSpace(_email))
 				result = "შეიყვანეთ ელ-ფოსტა";
-			else if (!regex.Match (_email).Success)
+			else if (!regex.Match(_email).Success)
 				result = "შეიყვანეთ ელ-ფოსტა სწორი ფორმატით";
-			else if (string.IsNullOrWhiteSpace (_password))
+			else if (string.IsNullOrWhiteSpace(_password))
 				result = "შეიყვანეთ პაროლი";
-			else if (!string.IsNullOrWhiteSpace (passValidation))
+			else if (!string.IsNullOrWhiteSpace(passValidation))
 				result = passValidation;
-			else if (!string.Equals (_password, _confirmPassword))
+			else if (!string.Equals(_password, _confirmPassword))
 				result = "პაროლი და განმეორებითი პაროლი ერთმანეთს არ ემთხვევა";
 			return result;
 		}
@@ -167,7 +182,8 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
 
 	public class iEmailRegistrationViewModelParams
 	{
-		public string UnicardNumber {
+		public string UnicardNumber
+		{
 			get;
 			set;
 		}

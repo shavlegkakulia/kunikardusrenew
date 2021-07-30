@@ -1,4 +1,4 @@
-﻿using MvvmCross.Core.ViewModels;
+﻿
 using System.Windows.Input;
 using System.Collections.Generic;
 using Kunicardus.Core.Models;
@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Kunicardus.Core.Providers.LocalDBProvider;
 using Kunicardus.Core.Models.DB;
 using System.Linq;
+using MvvmCross.ViewModels;
+using MvvmCross.Commands;
 
 namespace Kunicardus.Core
 {

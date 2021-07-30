@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
-using MvvmCross.Core.ViewModels;
+using MvvmCross.ViewModels;
 using Kunicardus.Core.Services.Abstract;
 using System.Text.RegularExpressions;
 
@@ -17,7 +17,7 @@ namespace Kunicardus.Core
 
 		#region Constructor Implementation
 
-		public ResetPasswordSMSVerificationViewModel (IUserService userService, ISmsVerifycationService smsVerificationService)
+		public ResetPasswordSMSVerificationViewModel(IUserService userService, ISmsVerifycationService smsVerificationService)
 		{
 			_userService = userService;
 			_smsVerificationService = smsVerificationService;
@@ -29,56 +29,70 @@ namespace Kunicardus.Core
 
 		private string _newPassword;
 
-		public string NewPassword { 
-			get {
+		public string NewPassword
+		{
+			get
+			{
 				return _newPassword;
-			} 
-			set { 
+			}
+			set
+			{
 				_newPassword = value;
-			} 
+			}
 		}
 
 
 		private string _userName;
 
-		public string UserName { 
-			get {
+		public string UserName
+		{
+			get
+			{
 				return _userName;
-			} 
-			set { 
+			}
+			set
+			{
 				_userName = value;
-			} 
+			}
 		}
 
 		private string _userPhoneNumber;
 
-		public string UserPhoneNumber { 
-			get {
+		public string UserPhoneNumber
+		{
+			get
+			{
 				return _userPhoneNumber;
-			} 
-			set { 
+			}
+			set
+			{
 				_userPhoneNumber = value;
-			} 
+			}
 		}
 
 		private string _userId;
 
-		public string UserID { 
-			get {
+		public string UserID
+		{
+			get
+			{
 				return _userId;
-			} 
-			set { 
+			}
+			set
+			{
 				_userId = value;
-			} 
+			}
 		}
 
 		private string _verificationCode;
 
-		public string VerificationCode {
-			get{ return _verificationCode; }
-			set {
+		public string VerificationCode
+		{
+			get { return _verificationCode; }
+			set
+			{
 				_verificationCode = value;
-				RaisePropertyChanged (() => VerificationCode);
+				RaisePropertyChanged(() => VerificationCode);
 			}
 		}
 
@@ -88,11 +102,13 @@ namespace Kunicardus.Core
 
 		private ICommand _resetPassword;
 
-		public ICommand ResetPasswordCommand { 
-			get {
-				_resetPassword = _resetPassword ?? new MvxCommand (ResetPassword);
+		public ICommand ResetPasswordCommand
+		{
+			get
+			{
+				_resetPassword = _resetPassword ?? new MvvmCross.Commands.MvxCommand(ResetPassword);
 				return _resetPassword;
-			} 
+			}
 		}
 
 
@@ -100,28 +116,30 @@ namespace Kunicardus.Core
 
 		#region Methods
 
-		public bool SendOTP (string userId, string userPhone)
+		public bool SendOTP(string userId, string userPhone)
 		{
-			
-			var response = _smsVerificationService.SendOTP (userId, "", userPhone);
+
+			var response = _smsVerificationService.SendOTP(userId, "", userPhone);
 			if (!response.Success)
-				_dialog.ShowToast (response.DisplayMessage);
+				_dialog.ShowToast(response.DisplayMessage);
 			return response.Success;
 		}
 
-		private void ResetPassword ()
+		private void ResetPassword()
 		{
-			if (!string.IsNullOrWhiteSpace (_verificationCode)) {
+			if (!string.IsNullOrWhiteSpace(_verificationCode))
+			{
 
-				var resetPasswordResponse = _userService.ResetPassword (_userName, _verificationCode, _newPassword);
+				var resetPasswordResponse = _userService.ResetPassword(_userName, _verificationCode, _newPassword);
 				if (resetPasswordResponse.Success)
-					ShowViewModel<LoginAuthViewModel> ();
-		
-				InvokeOnMainThread (() => {
-					_dialog.ShowToast (resetPasswordResponse.DisplayMessage);
+					NavigationCommand<LoginAuthViewModel>();
+
+				InvokeOnMainThread(() => {
+					_dialog.ShowToast(resetPasswordResponse.DisplayMessage);
 				});
-			} else
-				_dialog.ShowToast ("შეიყვანეთ ვერიფიკაციის კოდი");
+			}
+			else
+				_dialog.ShowToast("შეიყვანეთ ვერიფიკაციის კოდი");
 		}
 
 		#endregion

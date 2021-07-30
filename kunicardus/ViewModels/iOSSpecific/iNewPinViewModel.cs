@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Kunicardus.Core;
+using System;
 
-namespace Kunicardus.Core
+namespace Kuni.Core
 {
 	public class iNewPinViewModel : BaseViewModel
 	{
 
-		public void Init (string headerTitle, string pageTitle)
+		public void Init(string headerTitle, string pageTitle)
 		{
 			this.HeaderTitle = headerTitle;
 			this.PageTitle = pageTitle;
@@ -15,57 +16,72 @@ namespace Kunicardus.Core
 
 		private string _newPin;
 
-		public string NewPin {
-			get{ return _newPin; }
-			set {
+		public string NewPin
+		{
+			get { return _newPin; }
+			set
+			{
 				_newPin = value;
-				RaisePropertyChanged (() => NewPin);
+				RaisePropertyChanged(() => NewPin);
 			}
 		}
 
 		private string _headerTitle;
 
-		public string HeaderTitle {
-			get{ return _headerTitle; }
-			set {
+		public string HeaderTitle
+		{
+			get { return _headerTitle; }
+			set
+			{
 				_headerTitle = value;
 			}
 		}
 
 		private string _pageTitle;
 
-		public string PageTitle {
-			get{ return _pageTitle; }
-			set {
+		public string PageTitle
+		{
+			get { return _pageTitle; }
+			set
+			{
 				_pageTitle = value;
 			}
 		}
 
-		public bool FromSetPin {
+		public bool FromSetPin
+		{
 			get;
 			set;
 		}
 
 		private bool _pinInputFinished;
 
-		public bool PinInputFinished {
-			get{ return _pinInputFinished; }
-			set {
-				if (value) {
+		public bool PinInputFinished
+		{
+			get { return _pinInputFinished; }
+			set
+			{
+				if (value)
+				{
 					if (!FromSetPin)
-						ShowViewModel<iConfirmNewPinViewModel> (new {
-						fromSetPin = FromSetPin,
-						newPin = _newPin,
-						headerTitle = ApplicationStrings.ChangePin,
-						pageTitle = ApplicationStrings.repeat_new_pin});
-					else {
-						ShowViewModel<iConfirmNewPinViewModel> (new {
+						NavigationCommand<iConfirmNewPinViewModel>(new
+						{
+							fromSetPin = FromSetPin,
+							newPin = _newPin,
+							headerTitle = ApplicationStrings.ChangePin,
+							pageTitle = ApplicationStrings.repeat_new_pin
+						});
+					else
+					{
+						NavigationCommand<iConfirmNewPinViewModel>(new
+						{
 							fromSetPin = FromSetPin,
 							newPin = _newPin,
 							headerTitle = ApplicationStrings.set_pin,
-							pageTitle = ApplicationStrings.repeat_new_pin});
-					} 
-						
+							pageTitle = ApplicationStrings.repeat_new_pin
+						});
+					}
+
 				}
 				_pinInputFinished = value;
 			}

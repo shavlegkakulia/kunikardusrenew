@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Kunicardus.Core.Models.DB;
+using Kunicardus.Core.Models.DataTransferObjects;
 
 namespace Kunicardus.Core.Services.Concrete
 {

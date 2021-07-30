@@ -2,7 +2,7 @@
 using System.Xml.Linq;
 using System.Xml;
 using System.IO;
-using MvvmCross.Plugins.File;
+using MvvmCross.Plugin.File;
 
 namespace Kunicardus.Core.Helpers.AppSettings
 {

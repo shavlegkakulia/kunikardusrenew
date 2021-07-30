@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
-using MvvmCross.Core.ViewModels;
+using MvvmCross.ViewModels;
 using Kunicardus.Core.Services.Abstract;
 using Kunicardus.Core.Providers.LocalDBProvider;
 using Kunicardus.Core.Models.DB;
@@ -10,6 +10,7 @@ using Kunicardus.Core.Models;
 using System.Text.RegularExpressions;
 using Kunicardus.Core.ViewModels;
 using System.Runtime.InteropServices;
+using Kuni.Core;
 
 namespace Kunicardus.Core
 {
@@ -27,21 +28,22 @@ namespace Kunicardus.Core
 
 		private UserInfo _userInfo;
 
-		public UserInfo UserInfo {
+		public UserInfo UserInfo
+		{
 			get { return _userInfo; }
-			set{ _userInfo = value; }
+			set { _userInfo = value; }
 		}
 
 		#endregion
 
 		#region Constructor Implementation
 
-		public SettingsViewModel (IUserService userService, ILocalDbProvider localDbProvider)
+		public SettingsViewModel(IUserService userService, ILocalDbProvider localDbProvider)
 		{
-			
+
 			_userService = userService;
 			_localDBProvider = localDbProvider;
-			UserInfo = _localDBProvider.Get<UserInfo> ().FirstOrDefault ();
+			UserInfo = _localDBProvider.Get<UserInfo>().FirstOrDefault();
 			if (UserInfo != null && UserInfo.UserId == null)
 				UserInfo.UserId = "0";
 			//_userSettings = _localDBProvider.Get<SettingsInfo> ().Where (x => x.UserId == Convert.ToInt32 (UserInfo.UserId)).FirstOrDefault ();
@@ -53,10 +55,12 @@ namespace Kunicardus.Core
 
 		private ICommand _openChangePasswordPageCommand;
 
-		public ICommand OpenChangePasswordPageCommand {
-			get { 
-				_openChangePasswordPageCommand = _openChangePasswordPageCommand ?? new MvxCommand (() => {
-					ShowViewModel<ChangePasswordViewModel> ();
+		public ICommand OpenChangePasswordPageCommand
+		{
+			get
+			{
+				_openChangePasswordPageCommand = _openChangePasswordPageCommand ?? new MvvmCross.Commands.MvxCommand(() => {
+					NavigationCommand<ChangePasswordViewModel>();
 				});
 				return _openChangePasswordPageCommand;
 			}
@@ -64,11 +68,16 @@ namespace Kunicardus.Core
 
 		private ICommand _openRemovePinViewModel;
 
-		public ICommand OpenRemovePinViewModelCommand {
-			get { 
-				_openRemovePinViewModel = _openRemovePinViewModel ?? new MvxCommand (() => {
-					ShowViewModel<iOldPinViewModel> (new {headerTitle = ApplicationStrings.RemovePin,
-						pageTitle = ApplicationStrings.RemovePinPageTitle});
+		public ICommand OpenRemovePinViewModelCommand
+		{
+			get
+			{
+				_openRemovePinViewModel = _openRemovePinViewModel ?? new MvvmCross.Commands.MvxCommand(() => {
+					NavigationCommand<iOldPinViewModel>(new
+					{
+						headerTitle = ApplicationStrings.RemovePin,
+						pageTitle = ApplicationStrings.RemovePinPageTitle
+					});
 				});
 				return _openRemovePinViewModel;
 			}
@@ -76,11 +85,16 @@ namespace Kunicardus.Core
 
 		private ICommand _openChangePinViewModelCommand;
 
-		public ICommand OpenChangePinViewModelCommand {
-			get { 
-				_openChangePinViewModelCommand = _openChangePinViewModelCommand ?? new MvxCommand (() => {
-					ShowViewModel<iOldPinViewModel> (new {headerTitle = ApplicationStrings.ChangePin,
-						pageTitle = ApplicationStrings.ChangePinPageTitle});
+		public ICommand OpenChangePinViewModelCommand
+		{
+			get
+			{
+				_openChangePinViewModelCommand = _openChangePinViewModelCommand ?? new MvvmCross.Commands.MvxCommand(() => {
+					NavigationCommand<iOldPinViewModel>(new
+					{
+						headerTitle = ApplicationStrings.ChangePin,
+						pageTitle = ApplicationStrings.ChangePinPageTitle
+					});
 				});
 				return _openChangePinViewModelCommand;
 			}
@@ -88,11 +102,16 @@ namespace Kunicardus.Core
 
 		private ICommand _openSetPinViewModellCommand;
 
-		public ICommand OpenSetPinViewModellCommand {
-			get { 
-				_openSetPinViewModellCommand = _openSetPinViewModellCommand ?? new MvxCommand (() => {
-					ShowViewModel<iNewPinViewModel> (new {headerTitle = ApplicationStrings.set_pin,
-						pageTitle = ApplicationStrings.enter_new_pin});
+		public ICommand OpenSetPinViewModellCommand
+		{
+			get
+			{
+				_openSetPinViewModellCommand = _openSetPinViewModellCommand ?? new MvvmCross.Commands.MvxCommand(() => {
+					NavigationCommand<iNewPinViewModel>(new
+					{
+						headerTitle = ApplicationStrings.set_pin,
+						pageTitle = ApplicationStrings.enter_new_pin
+					});
 				});
 				return _openSetPinViewModellCommand;
 			}
@@ -102,61 +121,67 @@ namespace Kunicardus.Core
 
 		#region Methods
 
-		public bool ShouldShowChangePassword ()
+		public bool ShouldShowChangePassword()
 		{
-			var user = _localDBProvider.Get<UserInfo> ().FirstOrDefault ();
+			var user = _localDBProvider.Get<UserInfo>().FirstOrDefault();
 			return (user != null && !user.IsFacebookUser);
 		}
 
-		private string Validation (string oldPassword, string newPassword, string confirmNewpassword)
+		private string Validation(string oldPassword, string newPassword, string confirmNewpassword)
 		{
 			string result = "";
-			string passValidation = PasswordValidation (newPassword);
-			if (!string.IsNullOrWhiteSpace (passValidation)) {
+			string passValidation = PasswordValidation(newPassword);
+			if (!string.IsNullOrWhiteSpace(passValidation))
+			{
 				result = passValidation;
-			} else if (oldPassword == newPassword)
+			}
+			else if (oldPassword == newPassword)
 				result = "ახალი და ძველი პაროლი ერთმანეთს ემთხვევა";
 			else if (newPassword != confirmNewpassword)
 				result = "პაროლი და პაროლი განმეორებით არ ემთხვევა ერთმანეთს";
 			return result;
 		}
 
-		private string PasswordValidation (string newPassword)
+		private string PasswordValidation(string newPassword)
 		{
 			string errorText = "";
-			if (!string.IsNullOrWhiteSpace (newPassword)) {
-				Match ifNumber = Regex.Match (newPassword, @"\d+");
-				Match ifCharacter = Regex.Match (newPassword, @"[a-zA-Z]");
+			if (!string.IsNullOrWhiteSpace(newPassword))
+			{
+				Match ifNumber = Regex.Match(newPassword, @"\d+");
+				Match ifCharacter = Regex.Match(newPassword, @"[a-zA-Z]");
 				if (newPassword.Length < 8)
 					errorText = "პაროლის სიგრძე უნდა აღემატებოდეს 8 სიმბოლოს";
 				else if (ifNumber.Value == "")
 					errorText = "პაროლში აუცილებელია 1 რიცხვი მაინც";
 				else if (ifCharacter.Value == "")
 					errorText = "პაროლში აუცილებელია 1 ლათინური ასო მაინც";
-			} else
+			}
+			else
 				errorText = "პაროლი ვერ იქნება ცარიელი";
 			return errorText;
 		}
 
 
 
-		public void ChangePassword (string oldPassword, string newPassword, string confirmPassword)
+		public void ChangePassword(string oldPassword, string newPassword, string confirmPassword)
 		{
-			var validationStatus = Validation (oldPassword, newPassword, confirmPassword);
-			if (string.IsNullOrWhiteSpace (validationStatus)) {
-				Task.Run (async() => {
-					InvokeOnMainThread (() => {
-						_dialog.ShowProgressDialog (ApplicationStrings.Loading);
+			var validationStatus = Validation(oldPassword, newPassword, confirmPassword);
+			if (string.IsNullOrWhiteSpace(validationStatus))
+			{
+				Task.Run(async () => {
+					InvokeOnMainThread(() => {
+						_dialog.ShowProgressDialog(ApplicationStrings.Loading);
 					});
-					var response = await _userService.ChangePassword (oldPassword, newPassword, UserInfo.UserId);
-					InvokeOnMainThread (() => {
-						_dialog.DismissProgressDialog ();
-						_dialog.ShowToast (response.DisplayMessage);
+					var response = await _userService.ChangePassword(oldPassword, newPassword, UserInfo.UserId);
+					InvokeOnMainThread(() => {
+						_dialog.DismissProgressDialog();
+						_dialog.ShowToast(response.DisplayMessage);
 					});
 				});
-			} else
-				InvokeOnMainThread (() => {
-					_dialog.ShowToast (validationStatus);
+			}
+			else
+				InvokeOnMainThread(() => {
+					_dialog.ShowToast(validationStatus);
 				});
 		}
 

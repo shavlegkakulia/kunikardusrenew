@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Kunicardus.Core.Models;
 using System.Windows.Input;
-using MvvmCross.Core.ViewModels;
+using MvvmCross.ViewModels;
 using Kunicardus.Core.Services.Abstract;
 using Kunicardus.Core.Providers.LocalDBProvider;
 using Kunicardus.Core.Models.DB;
@@ -300,7 +300,7 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
         public void ProductClick(ProductsInfo product)
         {
             _gaService.TrackScreen(GAServiceHelper.Page.CatalogDetail);
-            ShowViewModel<iCatalogDetailViewModel>(new { productId = product.ProductID });
+            NavigationCommand<iCatalogDetailViewModel>(new { productId = product.ProductID });
         }
 
         public void GetOrFilterProductList(bool showDialog)

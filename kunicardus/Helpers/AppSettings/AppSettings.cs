@@ -2,8 +2,6 @@
 using Kunicardus.Core.Helpers.Device;
 using System.Xml.Linq;
 using MvvmCross.Plugin.File;
-//using MvvmCross.Plugins.File;
-//using MvvmCross.Plugin.File;
 
 namespace Kunicardus.Core.Helpers.AppSettings
 {
@@ -27,7 +25,7 @@ namespace Kunicardus.Core.Helpers.AppSettings
 		private IConfigReader BundleConfigReader {
 			get {
 				if (null == _bundleConfigReader) {
-					_bundleConfigReader = new ConfigReader();
+					_bundleConfigReader = new ConfigReader (_fileStore);
 					_bundleConfigReader.Load (_bundleProvider.ConfigText);
 				}
 				return _bundleConfigReader;

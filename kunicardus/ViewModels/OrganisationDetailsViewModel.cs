@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Kunicardus.Core.Models;
 using System.Collections.Generic;
 using Kunicardus.Core.ViewModels.iOSSpecific;
+using MvvmCross.Commands;
 
 namespace Kunicardus.Core.ViewModels
 {
@@ -247,13 +248,13 @@ namespace Kunicardus.Core.ViewModels
             }
         }
 
-        private MvvmCross.Core.ViewModels.MvxCommand<string> _itemSelectedCommand;
+        private MvxCommand<string> _itemSelectedCommand;
 
         public System.Windows.Input.ICommand ItemSelectedCommand
         {
             get
             {
-                _itemSelectedCommand = _itemSelectedCommand ?? new MvvmCross.Core.ViewModels.MvxCommand<string>(DoSelectItem);
+                _itemSelectedCommand = _itemSelectedCommand ?? new MvvmCross.Commands.MvxCommand<string>(DoSelectItem);
                 return _itemSelectedCommand;
             }
         }
@@ -269,7 +270,7 @@ namespace Kunicardus.Core.ViewModels
 
         public void ShowObjects()
         {
-            ShowViewModel<iMerchantsAroundMeViewModel>(new { orgId = _organisationId });
+            NavigationCommand<iMerchantsAroundMeViewModel>(new { orgId = _organisationId });
         }
 
         public void Init(int organisationId)

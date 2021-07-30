@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Input;
-using MvvmCross.Core.ViewModels;
 using MvvmCross;
+using MvvmCross.Commands;
 
 namespace Kunicardus.Core.ViewModels
 {

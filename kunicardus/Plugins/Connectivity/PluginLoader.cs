@@ -2,6 +2,7 @@
 using MvvmCross;
 using MvvmCross.Platform;
 using MvvmCross.Platform.Plugins;
+using Mvx = MvvmCross.Platform.Mvx;
 
 namespace Kunicardus.Core.Plugins.Connectivity
 {

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Windows.Input;
-using MvvmCross.Core.ViewModels;
+using MvvmCross.ViewModels;
 using System.Collections.Generic;
 using Kunicardus.Core.Models.DataTransferObjects;
 using Kunicardus.Core.Models;
 using MvvmCross;
 using System.Threading.Tasks;
-using MvvmCross.Platform;
+//using MvvmCross;
 
 namespace Kunicardus.Core
 {
@@ -14,122 +14,139 @@ namespace Kunicardus.Core
 	{
 		ITransactionsService _transactionService;
 
-		public TransactionVerificationViewModel (ITransactionsService transactionService)
+		public TransactionVerificationViewModel(ITransactionsService transactionService)
 		{
 			_transactionService = transactionService;
 			if (_merchants.Count > 0)
-				_merchants.Clear ();
+				_merchants.Clear();
 		}
 
-		private List<Merchant> _merchants = new List<Merchant> ();
+		private List<Merchant> _merchants = new List<Merchant>();
 
-		public List<Merchant> Merchants {
+		public List<Merchant> Merchants
+		{
 			get { return _merchants; }
-			set {
+			set
+			{
 				_merchants = value;
-				RaisePropertyChanged (() => Merchants);
+				RaisePropertyChanged(() => Merchants);
 			}
 		}
 
 		private Merchant _selectedItem;
 
-		public Merchant SelectedMerchant {
+		public Merchant SelectedMerchant
+		{
 			get { return _selectedItem; }
-			set {
+			set
+			{
 				_selectedItem = value;
-				RaisePropertyChanged (() => SelectedMerchant);
+				RaisePropertyChanged(() => SelectedMerchant);
 			}
 		}
 
 		private string _price;
 
-		public string Price {	
+		public string Price
+		{
 			get { return _price; }
-			set {
+			set
+			{
 				_price = value;
-				RaisePropertyChanged (() => Price);
+				RaisePropertyChanged(() => Price);
 			}
 		}
 
 		private bool _dataPopulated;
 
-		public bool DataPopulated {	
+		public bool DataPopulated
+		{
 			get { return _dataPopulated; }
-			set {
+			set
+			{
 				_dataPopulated = value;
-				RaisePropertyChanged (() => DataPopulated);
+				RaisePropertyChanged(() => DataPopulated);
 			}
 		}
 
 		private DateTime? _date;
 
-		public DateTime? Date {	
+		public DateTime? Date
+		{
 			get { return _date; }
-			set {
+			set
+			{
 				_date = value;
-				RaisePropertyChanged (() => Date);
+				RaisePropertyChanged(() => Date);
 			}
 		}
 
 		private string _unicardNumber;
 
-		public string UnicardNumber {
+		public string UnicardNumber
+		{
 			get { return _unicardNumber; }
 			set { _unicardNumber = value; }
 		}
 
 		private ICommand _continueCommand;
 
-		public ICommand ContinueCommand {
-			get {
-				_continueCommand = _continueCommand ?? new MvxCommand (Continue);
+		public ICommand ContinueCommand
+		{
+			get
+			{
+				_continueCommand = _continueCommand ?? new MvvmCross.Commands.MvxCommand(Continue);
 				return _continueCommand;
 			}
 		}
 
 		private bool _lastTransactionStatus;
 
-		public bool LastTransactionStatus {
+		public bool LastTransactionStatus
+		{
 			get { return _lastTransactionStatus; }
-			set{ _lastTransactionStatus = value; }
+			set { _lastTransactionStatus = value; }
 		}
 
-		private void Continue ()
+		private void Continue()
 		{
-			_dialog.ShowProgressDialog (ApplicationStrings.Loading);
-			Task.Run (() => {
+			_dialog.ShowProgressDialog(ApplicationStrings.Loading);
+			Task.Run(() => {
 				ShouldValidateModel = true;
 				if (_selectedItem == null)
-					InvokeOnMainThread (() => {
-						_dialog.ShowToast ("აირჩიეთ ბოლო ტრანზაქციის ადგილი");
+					InvokeOnMainThread(() => {
+						_dialog.ShowToast("აირჩიეთ ბოლო ტრანზაქციის ადგილი");
 					});
-				else if (string.IsNullOrWhiteSpace (_price))
-					InvokeOnMainThread (() => {
-						_dialog.ShowToast ("შეიყვანეთ თანხა");
+				else if (string.IsNullOrWhiteSpace(_price))
+					InvokeOnMainThread(() => {
+						_dialog.ShowToast("შეიყვანეთ თანხა");
 					});
 				else if (!_date.HasValue)
-					InvokeOnMainThread (() => {
-						_dialog.ShowToast ("აირჩიეთ ბოლო ტრანზაქციის დრო");
+					InvokeOnMainThread(() => {
+						_dialog.ShowToast("აირჩიეთ ბოლო ტრანზაქციის დრო");
 					});
-				else {
-					var response = _transactionService.CheckLastTransaction (
-						               _unicardNumber,
-						               _selectedItem.MerchantId,	
-						               _price.ToString (),
-						               _date);
+				else
+				{
+					var response = _transactionService.CheckLastTransaction(
+									   _unicardNumber,
+									   _selectedItem.MerchantId,
+									   _price.ToString(),
+									   _date);
 					_lastTransactionStatus = response.Success;
 
-					if (response.Success) {
-						Mvx.IocConstruct<RegistrationViewModel> ();
+					if (response.Success)
+					{
+						Mvx.IoCConstruct<RegistrationViewModel>();
 					}
-					InvokeOnMainThread (() => {
-						if (!string.IsNullOrEmpty (response.DisplayMessage)) {
-							_dialog.ShowToast (response.DisplayMessage);
+					InvokeOnMainThread(() => {
+						if (!string.IsNullOrEmpty(response.DisplayMessage))
+						{
+							_dialog.ShowToast(response.DisplayMessage);
 						}
 					});
 				}
-				InvokeOnMainThread (() => {
-					_dialog.DismissProgressDialog ();	
+				InvokeOnMainThread(() => {
+					_dialog.DismissProgressDialog();
 				});
 				DataPopulated = true;
 			});

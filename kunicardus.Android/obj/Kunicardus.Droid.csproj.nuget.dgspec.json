@@ -107,7 +107,15 @@
               "target": "Package",
               "version": "[5.7.0, )"
             },
+            "MvvmCross.Plugin.Color": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
             "MvvmCross.Plugin.File": {
+              "target": "Package",
+              "version": "[7.0.1, )"
+            },
+            "MvvmCross.Plugin.Network": {
               "target": "Package",
               "version": "[7.0.1, )"
             },

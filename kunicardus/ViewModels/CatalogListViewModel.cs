@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Kunicardus.Core.Models;
 using System.Windows.Input;
-using MvvmCross.Core.ViewModels;
 using Kunicardus.Core.Services.Abstract;
 using Kunicardus.Core.Providers.LocalDBProvider;
 using Kunicardus.Core.Models.DB;
+using MvvmCross.Commands;
 
 namespace Kunicardus.Core.ViewModels
 {

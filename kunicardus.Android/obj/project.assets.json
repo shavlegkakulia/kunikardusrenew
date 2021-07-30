@@ -34,6 +34,18 @@
           "lib/MonoAndroid/MvvmCross.Platform.dll": {}
         }
       },
+      "MvvmCross.Plugin.Color/8.0.2": {
+        "type": "package",
+        "dependencies": {
+          "MvvmCross": "8.0.2"
+        },
+        "compile": {
+          "lib/netstandard2.0/MvvmCross.Plugin.Color.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/MvvmCross.Plugin.Color.dll": {}
+        }
+      },
       "MvvmCross.Plugin.File/7.0.1": {
         "type": "package",
         "dependencies": {
@@ -44,6 +56,19 @@
         },
         "runtime": {
           "lib/netstandard2.0/MvvmCross.Plugin.File.dll": {}
+        }
+      },
+      "MvvmCross.Plugin.Network/7.0.1": {
+        "type": "package",
+        "dependencies": {
+          "MvvmCross": "7.0.1",
+          "MvvmCross.Plugin.File": "7.0.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/MvvmCross.Plugin.Network.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/MvvmCross.Plugin.Network.dll": {}
         }
       },
       "Newtonsoft.Json/13.0.1": {
@@ -936,7 +961,9 @@
         "dependencies": {
           "MvvmCross": "8.0.2",
           "MvvmCross.Platform": "5.7.0",
+          "MvvmCross.Plugin.Color": "8.0.2",
           "MvvmCross.Plugin.File": "7.0.1",
+          "MvvmCross.Plugin.Network": "7.0.1",
           "Newtonsoft.Json": "13.0.1",
           "Xamarin.Essentials": "1.5.3.2",
           "Xamarin.Forms": "4.8.0.1451",
@@ -1058,6 +1085,50 @@
         "mvvmcross.platform.nuspec"
       ]
     },
+    "MvvmCross.Plugin.Color/8.0.2": {
+      "sha512": "psHWCDxSIhvj67dRPfJpSTMVBgmXi01z3e0R+LpUOOU3gpSXz6Ks9f55CKff4T8qhs81OUwoAJknPuYJlZokBw==",
+      "type": "package",
+      "path": "mvvmcross.plugin.color/8.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "icon.png",
+        "lib/monoandroid10.0/MvvmCross.Plugin.Color.dll",
+        "lib/monoandroid10.0/MvvmCross.Plugin.Color.pdb",
+        "lib/monoandroid10.0/MvvmCross.Plugin.Color.xml",
+        "lib/net461/MvvmCross.Plugin.Color.dll",
+        "lib/net461/MvvmCross.Plugin.Color.pdb",
+        "lib/net461/MvvmCross.Plugin.Color.xml",
+        "lib/netcoreapp3.1/MvvmCross.Plugin.Color.dll",
+        "lib/netcoreapp3.1/MvvmCross.Plugin.Color.pdb",
+        "lib/netcoreapp3.1/MvvmCross.Plugin.Color.xml",
+        "lib/netstandard2.0/MvvmCross.Plugin.Color.dll",
+        "lib/netstandard2.0/MvvmCross.Plugin.Color.pdb",
+        "lib/netstandard2.0/MvvmCross.Plugin.Color.xml",
+        "lib/tizen40/MvvmCross.Plugin.Color.dll",
+        "lib/tizen40/MvvmCross.Plugin.Color.pdb",
+        "lib/tizen40/MvvmCross.Plugin.Color.xml",
+        "lib/uap10.0.16299/MvvmCross.Plugin.Color.dll",
+        "lib/uap10.0.16299/MvvmCross.Plugin.Color.pdb",
+        "lib/uap10.0.16299/MvvmCross.Plugin.Color.pri",
+        "lib/uap10.0.16299/MvvmCross.Plugin.Color.xml",
+        "lib/xamarinios10/MvvmCross.Plugin.Color.dll",
+        "lib/xamarinios10/MvvmCross.Plugin.Color.pdb",
+        "lib/xamarinios10/MvvmCross.Plugin.Color.xml",
+        "lib/xamarinmac20/MvvmCross.Plugin.Color.dll",
+        "lib/xamarinmac20/MvvmCross.Plugin.Color.pdb",
+        "lib/xamarinmac20/MvvmCross.Plugin.Color.xml",
+        "lib/xamarintvos10/MvvmCross.Plugin.Color.dll",
+        "lib/xamarintvos10/MvvmCross.Plugin.Color.pdb",
+        "lib/xamarintvos10/MvvmCross.Plugin.Color.xml",
+        "lib/xamarinwatchos10/MvvmCross.Plugin.Color.dll",
+        "lib/xamarinwatchos10/MvvmCross.Plugin.Color.pdb",
+        "lib/xamarinwatchos10/MvvmCross.Plugin.Color.xml",
+        "mvvmcross.plugin.color.8.0.2.nupkg.sha512",
+        "mvvmcross.plugin.color.nuspec"
+      ]
+    },
     "MvvmCross.Plugin.File/7.0.1": {
       "sha512": "KvY/6VmSY1xcyRMz2SXtFiEw9IsVDBeKkvU4g6yDjO3m5lKxYK0Pz9pzw0rOoG31ybaF5BIRXODhA4rN7t3qDg==",
       "type": "package",
@@ -1100,6 +1171,50 @@
         "lib/xamarinwatchos10/MvvmCross.Plugin.File.xml",
         "mvvmcross.plugin.file.7.0.1.nupkg.sha512",
         "mvvmcross.plugin.file.nuspec"
+      ]
+    },
+    "MvvmCross.Plugin.Network/7.0.1": {
+      "sha512": "MBFXWLg+pYKLgst9aRNtNO4M0YdQcaNkc/QnvxL6EbyBltTQ1L8TSkDQ1xQ2bP5o5+dH/8as7nj97vDgTeMs/w==",
+      "type": "package",
+      "path": "mvvmcross.plugin.network/7.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "icon.png",
+        "lib/monoandroid10.0/MvvmCross.Plugin.Network.dll",
+        "lib/monoandroid10.0/MvvmCross.Plugin.Network.pdb",
+        "lib/monoandroid10.0/MvvmCross.Plugin.Network.xml",
+        "lib/net461/MvvmCross.Plugin.Network.dll",
+        "lib/net461/MvvmCross.Plugin.Network.pdb",
+        "lib/net461/MvvmCross.Plugin.Network.xml",
+        "lib/netcoreapp3.1/MvvmCross.Plugin.Network.dll",
+        "lib/netcoreapp3.1/MvvmCross.Plugin.Network.pdb",
+        "lib/netcoreapp3.1/MvvmCross.Plugin.Network.xml",
+        "lib/netstandard2.0/MvvmCross.Plugin.Network.dll",
+        "lib/netstandard2.0/MvvmCross.Plugin.Network.pdb",
+        "lib/netstandard2.0/MvvmCross.Plugin.Network.xml",
+        "lib/tizen40/MvvmCross.Plugin.Network.dll",
+        "lib/tizen40/MvvmCross.Plugin.Network.pdb",
+        "lib/tizen40/MvvmCross.Plugin.Network.xml",
+        "lib/uap10.0.16299/MvvmCross.Plugin.Network.dll",
+        "lib/uap10.0.16299/MvvmCross.Plugin.Network.pdb",
+        "lib/uap10.0.16299/MvvmCross.Plugin.Network.pri",
+        "lib/uap10.0.16299/MvvmCross.Plugin.Network.xml",
+        "lib/xamarinios10/MvvmCross.Plugin.Network.dll",
+        "lib/xamarinios10/MvvmCross.Plugin.Network.pdb",
+        "lib/xamarinios10/MvvmCross.Plugin.Network.xml",
+        "lib/xamarinmac20/MvvmCross.Plugin.Network.dll",
+        "lib/xamarinmac20/MvvmCross.Plugin.Network.pdb",
+        "lib/xamarinmac20/MvvmCross.Plugin.Network.xml",
+        "lib/xamarintvos10/MvvmCross.Plugin.Network.dll",
+        "lib/xamarintvos10/MvvmCross.Plugin.Network.pdb",
+        "lib/xamarintvos10/MvvmCross.Plugin.Network.xml",
+        "lib/xamarinwatchos10/MvvmCross.Plugin.Network.dll",
+        "lib/xamarinwatchos10/MvvmCross.Plugin.Network.pdb",
+        "lib/xamarinwatchos10/MvvmCross.Plugin.Network.xml",
+        "mvvmcross.plugin.network.7.0.1.nupkg.sha512",
+        "mvvmcross.plugin.network.nuspec"
       ]
     },
     "Newtonsoft.Json/13.0.1": {

@@ -1,8 +1,18 @@
 ﻿using System;
 using MvvmCross;
 using Kunicardus.Core.Plugins.UIDialogPlugin;
-using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
+using Mvx = MvvmCross.Platform.Mvx;
+using MvvmCross.ViewModels;
+using System;
+using MvvmCross;
+using Kunicardus.Core.Plugins.UIDialogPlugin;
+using MvvmCross.ViewModels;
+//using MvvmCross.ViewModels;
+//using MvvmCross.ViewModels;
+//using MvvmCross;
+using MvvmCross.Views;
+using MvvmCross.Navigation;
 
 namespace Kunicardus.Core
 {

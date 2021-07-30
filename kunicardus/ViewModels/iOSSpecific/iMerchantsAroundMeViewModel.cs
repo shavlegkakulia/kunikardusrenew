@@ -166,7 +166,7 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
         {
             _gaService.TrackEvent(GAServiceHelper.From.FromPartnersList, GAServiceHelper.Events.PartnersDetailClicked);
             _gaService.TrackScreen(GAServiceHelper.Page.PartnersDetails);
-            ShowViewModel<OrganizationDetailsViewModel>(new { organisationId = orgId });
+            NavigationCommand<OrganizationDetailsViewModel>(new { organisationId = orgId });
         }
 
         public void GetMerchants(int? orgId = null)
@@ -194,7 +194,8 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
                 {
                     response = await _organizationService.GetMerchants(null, null, orgId);
                 }
-                else {
+                else
+                {
                     response = await _organizationService.GetMerchants(null, null, null);
                 }
                 merchants = new List<MerchantInfo>();
@@ -287,7 +288,8 @@ namespace Kunicardus.Core.ViewModels.iOSSpecific
                         {
                             item.DistanceText = string.Format(">50 {0}", item.DistanceUnit);
                         }
-                        else {
+                        else
+                        {
                             item.DistanceText = string.Format(">{0} {1}", item.Distance / 100000 * 100, item.DistanceUnit);
                         }
                     }

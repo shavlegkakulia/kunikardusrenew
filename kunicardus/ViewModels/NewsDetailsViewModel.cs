@@ -8,6 +8,7 @@ using Kunicardus.Core.Providers.LocalDBProvider;
 using Kunicardus.Core.Services.Abstract;
 using MvvmCross;
 using MvvmCross.Platform;
+using Mvx = MvvmCross.Platform.Mvx;
 
 namespace Kunicardus.Core.ViewModels
 {

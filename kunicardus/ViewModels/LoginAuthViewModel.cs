@@ -3,7 +3,7 @@ using Kunicardus.Core.Services.Abstract;
 using Kunicardus.Core.Providers.LocalDBProvider;
 using Kunicardus.Core.Plugins.UIDialogPlugin;
 using System.Windows.Input;
-using MvvmCross.Core.ViewModels;
+using MvvmCross.ViewModels;
 using Kunicardus.Core.Models.DB;
 using Kunicardus.Core.Models;
 using System.Threading.Tasks;
@@ -50,7 +50,7 @@ namespace Kunicardus.Core
             base._device = device;
             _securityProvider = securityProvider;
             _iGoogleAnalyticsService = iGoogleAnalyticsService;
-            //			using (ILocalDbProvider db = Mvx.Resolve<ILocalDbProvider> ()) {
+            //			using (ILocalDbProvider db = Mvx.IoCProvider.Resolve<ILocalDbProvider> ()) {
             //				
             //			}
 
@@ -61,8 +61,8 @@ namespace Kunicardus.Core
             }
 
 #if DEBUG
-			UserName = "smamuchishvili@gmail.com";
-			Password = "bulvari111";
+            UserName = "smamuchishvili@gmail.com";
+            Password = "bulvari111";
 #else
 #endif
         }
@@ -106,7 +106,7 @@ namespace Kunicardus.Core
         {
             get
             {
-                _forgotPassword = _forgotPassword ?? new MvxCommand(ResetPassword);
+                _forgotPassword = _forgotPassword ?? new MvvmCross.Commands.MvxCommand(ResetPassword);
                 return _forgotPassword;
             }
         }
@@ -117,7 +117,7 @@ namespace Kunicardus.Core
         {
             get
             {
-                _authCommand = _authCommand ?? new MvxCommand(Auth);
+                _authCommand = _authCommand ?? new MvvmCross.Commands.MvxCommand(Auth);
                 return _authCommand;
             }
         }
@@ -128,9 +128,9 @@ namespace Kunicardus.Core
         {
             get
             {
-                return new MvxCommand(() =>
+                return new MvvmCross.Commands.MvxCommand(() =>
                 {
-                    ShowViewModel<LoginViewModel>();
+                    NavigationCommand<LoginViewModel>();
                 });
             }
         }
@@ -143,15 +143,15 @@ namespace Kunicardus.Core
         {
             if (_device.Platform == "ios")
             {
-                ShowViewModel<iResetPasswordViewModel>(new { email = this.UserName });
+                NavigationCommand<iResetPasswordViewModel>(new { email = this.UserName });
             }
             else
             {
-                ShowViewModel<BaseResetPasswordViewModel>(new { email = this.UserName });
+                NavigationCommand<BaseResetPasswordViewModel>(new { email = this.UserName });
             }
         }
 
-        private void Auth()
+        public void Auth()
         {
             ShouldValidateModel = true;
 
@@ -188,7 +188,7 @@ namespace Kunicardus.Core
                     {
                         try
                         {
-                            ShowViewModel<MainViewModel>(new { auth = true });
+                            NavigationCommand<MainViewModel>(new { auth = true });
                         }
                         catch (Exception ex)
                         {

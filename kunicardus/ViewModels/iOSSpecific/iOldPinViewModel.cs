@@ -4,6 +4,7 @@ using Kunicardus.Core.Models.DB;
 using System.Linq;
 using System.Threading.Tasks;
 using System.IO;
+using Kuni.Core;
 
 namespace Kunicardus.Core
 {
@@ -20,13 +21,13 @@ namespace Kunicardus.Core
 		#region Constructor Implementation
 
 
-		public iOldPinViewModel (ILocalDbProvider dbProvider, IGoogleAnalyticsService gaService)
+		public iOldPinViewModel(ILocalDbProvider dbProvider, IGoogleAnalyticsService gaService)
 		{
 			_dbProvider = dbProvider;
-			_gaService = gaService;	
-			Task.Run (() => {
-				UserId = _dbProvider.Get<UserInfo> ().FirstOrDefault ().UserId;
-				_userSettings = _dbProvider.Get<SettingsInfo> ().FirstOrDefault ();
+			_gaService = gaService;
+			Task.Run(() => {
+				UserId = _dbProvider.Get<UserInfo>().FirstOrDefault().UserId;
+				_userSettings = _dbProvider.Get<SettingsInfo>().FirstOrDefault();
 			});
 		}
 
@@ -34,9 +35,9 @@ namespace Kunicardus.Core
 
 		#region Init
 
-		public void Init (string headerTitle, string pageTitle)
+		public void Init(string headerTitle, string pageTitle)
 		{
-			this.HeaderTitle = headerTitle;	
+			this.HeaderTitle = headerTitle;
 			this.PageTitle = pageTitle;
 		}
 
@@ -44,22 +45,31 @@ namespace Kunicardus.Core
 
 		#region Properties
 
-		public string UserId {
+		public string UserId
+		{
 			get;
 			set;
 		}
 
 		private bool _pinInputFinished;
 
-		public bool PinInputFinished {
-			get{ return _pinInputFinished; }
-			set {
-				if (value) {
-					if (PinIsCorrect ()) {
-						ShowViewModel<iNewPinViewModel> (new {headerTitle = ApplicationStrings.ChangePin,
-							pageTitle = ApplicationStrings.enter_new_pin});
-					} else
-						_dialog.ShowToast (ApplicationStrings.incorrect_pin);
+		public bool PinInputFinished
+		{
+			get { return _pinInputFinished; }
+			set
+			{
+				if (value)
+				{
+					if (PinIsCorrect())
+					{
+						NavigationCommand<iNewPinViewModel>(new
+						{
+							headerTitle = ApplicationStrings.ChangePin,
+							pageTitle = ApplicationStrings.enter_new_pin
+						});
+					}
+					else
+						_dialog.ShowToast(ApplicationStrings.incorrect_pin);
 				}
 				_pinInputFinished = value;
 			}
@@ -67,39 +77,47 @@ namespace Kunicardus.Core
 
 		private bool _pinRemoved;
 
-		public bool PinRemoved {
-			get{ return _pinRemoved; }
-			set {
+		public bool PinRemoved
+		{
+			get { return _pinRemoved; }
+			set
+			{
 				_pinRemoved = value;
-				RaisePropertyChanged (() => PinRemoved);
+				RaisePropertyChanged(() => PinRemoved);
 			}
 		}
 
 		private string _headerTitle;
 
-		public string HeaderTitle {
-			get{ return _headerTitle; }
-			set {
+		public string HeaderTitle
+		{
+			get { return _headerTitle; }
+			set
+			{
 				_headerTitle = value;
 			}
 		}
 
 		private string _pageTitle;
 
-		public string PageTitle {
-			get{ return _pageTitle; }
-			set {
+		public string PageTitle
+		{
+			get { return _pageTitle; }
+			set
+			{
 				_pageTitle = value;
 			}
 		}
 
 		private string _oldPin;
 
-		public string OldPin {
+		public string OldPin
+		{
 			get { return _oldPin; }
-			set { 
+			set
+			{
 				_oldPin = value;
-				RaisePropertyChanged (() => OldPin);
+				RaisePropertyChanged(() => OldPin);
 			}
 		}
 
@@ -107,30 +125,34 @@ namespace Kunicardus.Core
 
 		#region Methods
 
-		public bool PinIsCorrect ()
+		public bool PinIsCorrect()
 		{
-			_userSettings = _dbProvider.Get<SettingsInfo> ().Where (x => x.UserId == Convert.ToInt32 (UserId)).FirstOrDefault ();
-			var a = _dbProvider.Get<SettingsInfo> ().ToList ();
-			if (_userSettings.Pin != null && _userSettings.Pin.Equals (_oldPin))
+			_userSettings = _dbProvider.Get<SettingsInfo>().Where(x => x.UserId == Convert.ToInt32(UserId)).FirstOrDefault();
+			var a = _dbProvider.Get<SettingsInfo>().ToList();
+			if (_userSettings.Pin != null && _userSettings.Pin.Equals(_oldPin))
 				return true;
 			else
 				return false;
 		}
 
-		public void RemovePin ()
-		{	
-			if (PinIsCorrect ()) {
-				_dbProvider.Update<SettingsInfo> (new SettingsInfo () {
-					UserId = Convert.ToInt32 (UserId),
+		public void RemovePin()
+		{
+			if (PinIsCorrect())
+			{
+				_dbProvider.Update<SettingsInfo>(new SettingsInfo()
+				{
+					UserId = Convert.ToInt32(UserId),
 					Pin = null,
 					PinIsSet = false
 				});
 				this.PinRemoved = true;
-				_gaService.TrackEvent (GAServiceHelper.From.Settings, GAServiceHelper.Events.RemovePin);
-				_dialog.ShowToast (ApplicationStrings.removed_pin_successfully);
-			} else {
+				_gaService.TrackEvent(GAServiceHelper.From.Settings, GAServiceHelper.Events.RemovePin);
+				_dialog.ShowToast(ApplicationStrings.removed_pin_successfully);
+			}
+			else
+			{
 				this.PinRemoved = false;
-				_dialog.ShowToast (ApplicationStrings.incorrect_pin);
+				_dialog.ShowToast(ApplicationStrings.incorrect_pin);
 			}
 		}
 

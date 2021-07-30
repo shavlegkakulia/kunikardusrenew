@@ -5,8 +5,10 @@ using Kunicardus.Core.Models.DB;
 using System.Linq;
 using System.Threading.Tasks;
 using Kunicardus.Core.ViewModels;
-using MvvmCross.Core.ViewModels;
-using MvvmCross.Platform;
+using MvvmCross.ViewModels;
+using MvvmCross;
+using MvvmCross.Commands;
+//using MvvmCross;
 
 namespace Kunicardus.Core
 {
@@ -16,132 +18,154 @@ namespace Kunicardus.Core
 
 		private string _welcomeMessage;
 
-		public string WelcomeMessage {
-			get{ return _welcomeMessage; }
-			set {
+		public string WelcomeMessage
+		{
+			get { return _welcomeMessage; }
+			set
+			{
 				_welcomeMessage = value;
-				RaisePropertyChanged (() => WelcomeMessage);
+				RaisePropertyChanged(() => WelcomeMessage);
 			}
 		}
 
 		private string _cardNumber;
 
-		public string CardNumber {
-			get{ return _cardNumber; }
-			set {
+		public string CardNumber
+		{
+			get { return _cardNumber; }
+			set
+			{
 				_cardNumber = value;
 			}
 		}
 
-		public MenuViewModel (ILocalDbProvider dbProvider)
+		public MenuViewModel(ILocalDbProvider dbProvider)
 		{
 			_dbProvider = dbProvider;
 
-			Items.Add (new MenuModel {
+			Items.Add(new MenuModel
+			{
 				IconName = "home",
 				Name = "მთავარი"
 			});
-			Items.Add (new MenuModel {
+			Items.Add(new MenuModel
+			{
 				IconName = "mypage",
 				Name = "ჩემი გვერდი"
 			});
-			Items.Add (new MenuModel {
+			Items.Add(new MenuModel
+			{
 				IconName = "catalog",
 				Name = "რაში დავხარჯო"
 			});
-			Items.Add (new MenuModel {
+			Items.Add(new MenuModel
+			{
 				IconName = "merchants",
 				Name = "ჩემ გარშემო"
 			});
-			Items.Add (new MenuModel {
+			Items.Add(new MenuModel
+			{
 				IconName = "partners",
 				Name = ApplicationStrings.Partners
 			});
-			Items.Add (new MenuModel {
+			Items.Add(new MenuModel
+			{
 				IconName = "news",
 				Name = ApplicationStrings.News
 			});
-			Items.Add (new MenuModel {
+			Items.Add(new MenuModel
+			{
 				IconName = "unnamed",
 				Name = ApplicationStrings.AboutUs
 			});
-			Items.Add (new MenuModel {
+			Items.Add(new MenuModel
+			{
 				IconName = "settings",
 				Name = ApplicationStrings.Settings
 			});
-			Items.Add (new MenuModel {
+			Items.Add(new MenuModel
+			{
 				IconName = "logout",
 				Name = "გამოსვლა"
 			});
 
-			Task.Run (() => {
-				UpdateUserWelcomeMessage ();
+			Task.Run(() => {
+				UpdateUserWelcomeMessage();
 			});
 		}
 
-		private void UpdateUserWelcomeMessage ()
+		private void UpdateUserWelcomeMessage()
 		{
-			var user = _dbProvider.Get<UserInfo> ().FirstOrDefault ();
+			var user = _dbProvider.Get<UserInfo>().FirstOrDefault();
 			if (user != null
-			    && !string.IsNullOrWhiteSpace (user.FirstName)
-			    && !string.IsNullOrWhiteSpace (user.LastName)
-			    && user.FirstName != "-"
-			    && user.LastName != "-") {
-//				InvokeOnMainThread (() => {
-				WelcomeMessage = string.Format ("{0} {1}", user.FirstName, user.LastName);
-//				});
+				&& !string.IsNullOrWhiteSpace(user.FirstName)
+				&& !string.IsNullOrWhiteSpace(user.LastName)
+				&& user.FirstName != "-"
+				&& user.LastName != "-")
+			{
+				//				InvokeOnMainThread (() => {
+				WelcomeMessage = string.Format("{0} {1}", user.FirstName, user.LastName);
+				//				});
 				CardNumber = user.VirtualCardNumber;
-			} else {
-				InvokeOnMainThread (() => {
+			}
+			else
+			{
+				InvokeOnMainThread(() => {
 					WelcomeMessage = ApplicationStrings.Hello;
 				});
 			}
 		}
 
-		private List<MenuModel> _items = new List<MenuModel> ();
+		private List<MenuModel> _items = new List<MenuModel>();
 
-		public List<MenuModel> Items {
+		public List<MenuModel> Items
+		{
 			get { return _items; }
-			set {
+			set
+			{
 				_items = value;
-				RaisePropertyChanged (() => Items);
+				RaisePropertyChanged(() => Items);
 			}
 		}
 
 		private MvxCommand<MenuModel> _itemSelectedCommand;
 
-		public ICommand ItemSelectedCommand {
-			get {
-				_itemSelectedCommand = _itemSelectedCommand ?? new MvxCommand<MenuModel> (DoSelectItem);
+		public ICommand ItemSelectedCommand
+		{
+			get
+			{
+				_itemSelectedCommand = _itemSelectedCommand ?? new MvvmCross.Commands.MvxCommand<MenuModel>(DoSelectItem);
 				return _itemSelectedCommand;
 			}
 		}
 
-		private void DoSelectItem (MenuModel item)
+		private void DoSelectItem(MenuModel item)
 		{
-			switch (item.MenuIndex) {
-			case 0:
-				ShowViewModel<HomePageViewModel> ();
-				break;
-			case 1:
-				ShowViewModel<OrganisationListViewModel> ();
-				break;
-			case 2:
-				ShowViewModel<NewsListViewModel> ();
-				break;
+			switch (item.MenuIndex)
+			{
+				case 0:
+					NavigationCommand<HomePageViewModel>();
+					break;
+				case 1:
+					NavigationCommand<OrganisationListViewModel>();
+					break;
+				case 2:
+					NavigationCommand<NewsListViewModel>();
+					break;
 			}
 		}
 
 
-		public MvxViewModel GetSelectedViewModel (int index)
+		public MvxViewModel GetSelectedViewModel(int index)
 		{
-			switch (index) {
-			case 0:
-				return Mvx.IocConstruct<HomePageViewModel> ();
-			case 1:
-				return Mvx.IocConstruct<OrganisationListViewModel> ();
-			case 2:
-				return Mvx.IocConstruct<NewsListViewModel> ();
+			switch (index)
+			{
+				case 0:
+					return Mvx.IoCConstruct<HomePageViewModel>();
+				case 1:
+					return Mvx.IoCConstruct<OrganisationListViewModel>();
+				case 2:
+					return Mvx.IoCConstruct<NewsListViewModel>();
 			}
 			return null;
 		}

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Input;
-using MvvmCross.Core.ViewModels;
 using MvvmCross;
 using Kunicardus.Core.Services.Abstract;
 using Kunicardus.Core.ViewModels;
@@ -10,6 +9,7 @@ using Kunicardus.Core.Models.DataTransferObjects;
 using Kunicardus.Core.Providers.LocalDBProvider;
 using Kunicardus.Core.Models.DB;
 using Kunicardus.Core.Plugins.UIDialogPlugin;
+using MvvmCross.Commands;
 
 namespace Kunicardus.Core
 {
@@ -125,7 +125,7 @@ namespace Kunicardus.Core
 		public ICommand BackCommand {
 			get {
 				return new MvxCommand (() => {
-					ShowViewModel<LoginViewModel> ();
+					NavigationCommand<LoginViewModel>();
 				});
 			}
 		}
