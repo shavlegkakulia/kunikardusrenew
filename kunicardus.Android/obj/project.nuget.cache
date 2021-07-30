@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "XQ1x/5FwzxtNuO/eqGlM/bAddcdjNVjxf6RMNEBxLNgznnVmx4UXHBxzxUL1HNMAjG0A8sDMzmeZOIe1iJ2e/g==",
+  "dgSpecHash": "2HqY84XDTiWsmu30dTfKOBd2u8xrbN1A18jFs/1JDr6FcCBOzCk06o3++a+uljOybLPPnLyRLoN77X+3pi7P6w==",
   "success": true,
   "projectFilePath": "D:\\Sources\\Work\\unicard ganaxleba\\kunikardusrenew\\kunicardus.Android\\Kunicardus.Droid.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Shako\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\5.0.0\\microsoft.extensions.logging.abstractions.5.0.0.nupkg.sha512",
     "C:\\Users\\Shako\\.nuget\\packages\\mvvmcross\\8.0.2\\mvvmcross.8.0.2.nupkg.sha512",
+    "C:\\Users\\Shako\\.nuget\\packages\\mvvmcross.binding\\5.7.0\\mvvmcross.binding.5.7.0.nupkg.sha512",
+    "C:\\Users\\Shako\\.nuget\\packages\\mvvmcross.core\\5.7.0\\mvvmcross.core.5.7.0.nupkg.sha512",
     "C:\\Users\\Shako\\.nuget\\packages\\mvvmcross.platform\\5.7.0\\mvvmcross.platform.5.7.0.nupkg.sha512",
     "C:\\Users\\Shako\\.nuget\\packages\\mvvmcross.plugin.color\\8.0.2\\mvvmcross.plugin.color.8.0.2.nupkg.sha512",
     "C:\\Users\\Shako\\.nuget\\packages\\mvvmcross.plugin.file\\7.0.1\\mvvmcross.plugin.file.7.0.1.nupkg.sha512",

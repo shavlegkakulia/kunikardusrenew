@@ -4,5 +4,6 @@
     <SelectedDevice>Xiaomi Redmi Note 8</SelectedDevice>
     <AndroidDesignerPreferredDevice>Nexus 4</AndroidDesignerPreferredDevice>
     <AndroidDesignerPreferredTheme>MainTheme</AndroidDesignerPreferredTheme>
+    <ProjectView>ShowAllFiles</ProjectView>
   </PropertyGroup>
 </Project>

@@ -1021,3 +1021,12 @@ D:\Sources\Work\unicard ganaxleba\kunikardusrenew\kunicardus.Android\obj\Debug\9
 D:\Sources\Work\unicard ganaxleba\kunikardusrenew\kunicardus.Android\obj\Debug\90\android\assets\MvvmCross.Plugin.File.pdb
 D:\Sources\Work\unicard ganaxleba\kunikardusrenew\kunicardus.Android\obj\Debug\90\android\assets\MvvmCross.Plugin.Network.dll
 D:\Sources\Work\unicard ganaxleba\kunikardusrenew\kunicardus.Android\obj\Debug\90\android\assets\MvvmCross.Plugin.Network.pdb
+D:\Sources\Work\unicard ganaxleba\kunikardusrenew\kunicardus.Android\obj\Debug\90\lp\1\jl\files.cache
+D:\Sources\Work\unicard ganaxleba\kunikardusrenew\kunicardus.Android\obj\Debug\90\lp\16\jl\files.cache
+D:\Sources\Work\unicard ganaxleba\kunikardusrenew\kunicardus.Android\obj\Debug\90\lp\17\jl\files.cache
+D:\Sources\Work\unicard ganaxleba\kunikardusrenew\kunicardus.Android\obj\Debug\90\lp\23\jl\files.cache
+D:\Sources\Work\unicard ganaxleba\kunikardusrenew\kunicardus.Android\obj\Debug\90\lp\30\jl\files.cache
+D:\Sources\Work\unicard ganaxleba\kunikardusrenew\kunicardus.Android\obj\Debug\90\lp\37\jl\files.cache
+D:\Sources\Work\unicard ganaxleba\kunikardusrenew\kunicardus.Android\obj\Debug\90\lp\38\jl\files.cache
+D:\Sources\Work\unicard ganaxleba\kunikardusrenew\kunicardus.Android\obj\Debug\90\lp\42\jl\files.cache
+D:\Sources\Work\unicard ganaxleba\kunikardusrenew\kunicardus.Android\obj\Debug\90\lp\43\jl\files.cache

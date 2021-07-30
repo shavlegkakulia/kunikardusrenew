@@ -1,4 +1,6 @@
 FormsViewGroup
+MvvmCross.Binding.Droid
+MvvmCross.Droid
 MvvmCross.Platform.Droid
 SQLitePCLRaw.lib.e_sqlite3.android
 Xamarin.Android.Arch.Core.Common
