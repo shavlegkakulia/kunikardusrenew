@@ -12,3 +12,12 @@ D:\Sources\Work\unicard ganaxleba\kunicardus\kunicardus\obj\Debug\netstandard2.0
 D:\Sources\Work\unicard ganaxleba\kunicardus\kunicardus\obj\Debug\netstandard2.0\Kunicardus.Core.dll
 D:\Sources\Work\unicard ganaxleba\kunicardus\kunicardus\obj\Debug\netstandard2.0\ref\Kunicardus.Core.dll
 D:\Sources\Work\unicard ganaxleba\kunicardus\kunicardus\obj\Debug\netstandard2.0\Kunicardus.Core.pdb
+D:\Sources\Work\unicard ganaxleba\kunikardusrenew\kunicardus\obj\Debug\netstandard2.0\Kunicardus.Core.csprojAssemblyReference.cache
+D:\Sources\Work\unicard ganaxleba\kunikardusrenew\kunicardus\obj\Debug\netstandard2.0\App.xaml.g.cs
+D:\Sources\Work\unicard ganaxleba\kunikardusrenew\kunicardus\obj\Debug\netstandard2.0\MainPage.xaml.g.cs
+D:\Sources\Work\unicard ganaxleba\kunikardusrenew\kunicardus\obj\Debug\netstandard2.0\Kunicardus.Core.AssemblyInfoInputs.cache
+D:\Sources\Work\unicard ganaxleba\kunikardusrenew\kunicardus\obj\Debug\netstandard2.0\Kunicardus.Core.AssemblyInfo.cs
+D:\Sources\Work\unicard ganaxleba\kunikardusrenew\kunicardus\obj\Debug\netstandard2.0\Kunicardus.Core.csproj.CoreCompileInputs.cache
+D:\Sources\Work\unicard ganaxleba\kunikardusrenew\kunicardus\obj\Debug\netstandard2.0\Kunicardus.Core.dll
+D:\Sources\Work\unicard ganaxleba\kunikardusrenew\kunicardus\obj\Debug\netstandard2.0\ref\Kunicardus.Core.dll
+D:\Sources\Work\unicard ganaxleba\kunikardusrenew\kunicardus\obj\Debug\netstandard2.0\Kunicardus.Core.pdb

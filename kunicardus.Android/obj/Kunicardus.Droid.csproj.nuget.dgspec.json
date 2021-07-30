@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Sources\\Work\\unicard ganaxleba\\kunicardus\\kunicardus.Android\\Kunicardus.Droid.csproj": {}
+    "D:\\Sources\\Work\\unicard ganaxleba\\kunikardusrenew\\kunicardus.Android\\Kunicardus.Droid.csproj": {}
   },
   "projects": {
-    "D:\\Sources\\Work\\unicard ganaxleba\\kunicardus\\kunicardus.Android\\Kunicardus.Droid.csproj": {
+    "D:\\Sources\\Work\\unicard ganaxleba\\kunikardusrenew\\kunicardus.Android\\Kunicardus.Droid.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Sources\\Work\\unicard ganaxleba\\kunicardus\\kunicardus.Android\\Kunicardus.Droid.csproj",
+        "projectUniqueName": "D:\\Sources\\Work\\unicard ganaxleba\\kunikardusrenew\\kunicardus.Android\\Kunicardus.Droid.csproj",
         "projectName": "Kunicardus.Droid",
-        "projectPath": "D:\\Sources\\Work\\unicard ganaxleba\\kunicardus\\kunicardus.Android\\Kunicardus.Droid.csproj",
+        "projectPath": "D:\\Sources\\Work\\unicard ganaxleba\\kunikardusrenew\\kunicardus.Android\\Kunicardus.Droid.csproj",
         "packagesPath": "C:\\Users\\Shako\\.nuget\\packages\\",
-        "outputPath": "D:\\Sources\\Work\\unicard ganaxleba\\kunicardus\\kunicardus.Android\\obj\\",
+        "outputPath": "D:\\Sources\\Work\\unicard ganaxleba\\kunikardusrenew\\kunicardus.Android\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "fallbackFolders": [
@@ -32,8 +32,8 @@
         "frameworks": {
           "monoandroid90": {
             "projectReferences": {
-              "D:\\Sources\\Work\\unicard ganaxleba\\kunicardus\\kunicardus\\Kunicardus.Core.csproj": {
-                "projectPath": "D:\\Sources\\Work\\unicard ganaxleba\\kunicardus\\kunicardus\\Kunicardus.Core.csproj"
+              "D:\\Sources\\Work\\unicard ganaxleba\\kunikardusrenew\\kunicardus\\Kunicardus.Core.csproj": {
+                "projectPath": "D:\\Sources\\Work\\unicard ganaxleba\\kunikardusrenew\\kunicardus\\Kunicardus.Core.csproj"
               }
             }
           }
@@ -42,6 +42,10 @@
       "frameworks": {
         "monoandroid90": {
           "dependencies": {
+            "MvvmCross": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
             "Xamarin.Essentials": {
               "target": "Package",
               "version": "[1.5.3.2, )"
@@ -54,14 +58,14 @@
         }
       }
     },
-    "D:\\Sources\\Work\\unicard ganaxleba\\kunicardus\\kunicardus\\Kunicardus.Core.csproj": {
+    "D:\\Sources\\Work\\unicard ganaxleba\\kunikardusrenew\\kunicardus\\Kunicardus.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Sources\\Work\\unicard ganaxleba\\kunicardus\\kunicardus\\Kunicardus.Core.csproj",
+        "projectUniqueName": "D:\\Sources\\Work\\unicard ganaxleba\\kunikardusrenew\\kunicardus\\Kunicardus.Core.csproj",
         "projectName": "Kunicardus.Core",
-        "projectPath": "D:\\Sources\\Work\\unicard ganaxleba\\kunicardus\\kunicardus\\Kunicardus.Core.csproj",
+        "projectPath": "D:\\Sources\\Work\\unicard ganaxleba\\kunikardusrenew\\kunicardus\\Kunicardus.Core.csproj",
         "packagesPath": "C:\\Users\\Shako\\.nuget\\packages\\",
-        "outputPath": "D:\\Sources\\Work\\unicard ganaxleba\\kunicardus\\kunicardus\\obj\\",
+        "outputPath": "D:\\Sources\\Work\\unicard ganaxleba\\kunikardusrenew\\kunicardus\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -95,11 +99,27 @@
         "netstandard2.0": {
           "targetAlias": "netstandard2.0",
           "dependencies": {
+            "MvvmCross": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
+            "MvvmCross.Platform": {
+              "target": "Package",
+              "version": "[5.7.0, )"
+            },
+            "MvvmCross.Plugin.File": {
+              "target": "Package",
+              "version": "[7.0.1, )"
+            },
             "NETStandard.Library": {
               "suppressParent": "All",
               "target": "Package",
               "version": "[2.0.3, )",
               "autoReferenced": true
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
             },
             "Xamarin.Essentials": {
               "target": "Package",
@@ -108,6 +128,10 @@
             "Xamarin.Forms": {
               "target": "Package",
               "version": "[4.8.0.1451, )"
+            },
+            "sqlite-net-pcl": {
+              "target": "Package",
+              "version": "[1.7.335, )"
             }
           },
           "imports": [
